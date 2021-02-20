@@ -44,7 +44,7 @@ id,first_name,last_name,email,gender,ip_address
 
 // read file, parse CSV, each row is a chunck
 const readable = fs
-    .createReadStream('./MOCK_DATA_10.csv')
+    .createReadStream('./MOCK_DATA.csv')
     .pipe(parse());
 
 // Pipe rows to insert function
