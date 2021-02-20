@@ -1,5 +1,13 @@
 # Azure Cache for Redis sample code for JavaScript
 
+## Create Azure Cache for Redis resource
+
+* [Azure portal](https://ms.portal.azure.com/#create/Microsoft.Cache)
+
+## First party resources
+
+* [Azure Cache for Redis docs](https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/)
+
 ## 3rd party resources
 
 The following 3rd party samples and resources may be helpful:
