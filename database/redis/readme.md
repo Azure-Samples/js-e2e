@@ -7,6 +7,9 @@
 ## First party resources
 
 * [Azure Cache for Redis docs](https://docs.microsoft.com/en-us/azure/azure-cache-for-redis/)
+* JavaScript sample code
+  * [Bulk insert](bulk_insert.js)
+  * [Set key, get key, delete key](get-set.js) 
 
 ## 3rd party resources
 
