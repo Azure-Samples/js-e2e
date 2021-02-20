@@ -1,0 +1,14 @@
+{
+  "name": "azure-cache-for-redis",
+  "version": "1.0.0",
+  "description": "JavaScript to Azure Cache for Redis",
+  "main": "index.js",
+  "scripts": {
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "csv-parser": "^3.0.0",
+    "ioredis": "^4.22.0"
+  }
+}
