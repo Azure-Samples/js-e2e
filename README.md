@@ -1,57 +1,19 @@
-# Project Name
+# JavaScript end to end samples
 
-(short, 1-3 sentenced, description of the project)
+These samples are part of the documentation for the [Azure JavaScript Developer Center](https://docs.microsoft.com/azure/developer/javascript/). 
 
-## Features
+## Samples 
 
-This project framework provides the following features:
+The samples used in the JS e2e developer center include 
 
-* Feature 1
-* Feature 2
-* ...
-
-## Getting Started
-
-### Prerequisites
-
-(ideally very short, if any)
-
-- OS
-- Library version
-- ...
-
-### Installation
-
-(ideally very short)
-
-- npm install [package name]
-- mvn install
-- ...
-
-### Quickstart
-(Add steps to get up and running quickly)
-
-1. git clone [repository clone url]
-2. cd [respository name]
-3. ...
-
-
-## Demo
-
-A demo app is included to show how to use the project.
-
-To run the demo, follow these steps:
-
-(Add steps to start up the demo)
-
-1.
-2.
-3.
+* Code snippets - short, task-based code for Azure services - found in this repository
+* E2e applications - client, server, or full-stack applications using Azure services - found in other repositories
 
 ## Resources
 
-(Any additional resources or related projects)
+* Developer Advocate resources - produced by advocates
+* Community resources - produced by members of the community
 
-- Link to supporting information
-- Link to similar sample
-- ...
+## Let us know
+
+If the code, documentation, or other information has errors or is incomplete, let us know. 
