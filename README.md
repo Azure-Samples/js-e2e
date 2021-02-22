@@ -20,7 +20,7 @@ These are client, server, or full-stack applications using Azure services - foun
 |[Client file upload to Azure Storage Blobs](https://github.com/Azure-Samples/js-e2e-browser-file-upload-storage-blob)|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/tutorial/browser-file-upload-azure-storage-blob)|
 |[Static Web App Client using Cognitive Services Computer Vision](https://github.com/Azure-Samples/js-e2e-client-cognitive-services/blob/main/.github/workflows/sample-github-workflow.yml)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/static-web-app/introduction)|
 |[Server](https://github.com/Azure-Samples/js-e2e-express-server)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/tutorial-vscode-azure-cli-node/tutorial-vscode-azure-cli-node-01)|
-|[Server as VM deployed to Azure](https://github.com/Azure-Samples/js-e2e-vm)||
+|[Server as VM deployed to Azure](https://github.com/Azure-Samples/js-e2e-vm)|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/tutorial/nodejs-virtual-machine-vm/introduction)|
 |[Server - Text to Speech conversion to MP3 files using Cognitive Services Speech](https://github.com/Azure-Samples/js-e2e-express-server-cognitive-services)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/convert-text-to-speech-cognitive-services)|
 |[Server with MongoDB](https://github.com/Azure-Samples/js-e2e-express-mongodb)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/deploy-nodejs-mongodb-app-service-from-visual-studio-code)|
 |[Full stack with MongoDB](https://github.com/Azure-Samples/js-e2e-express-react-mongodb)||
