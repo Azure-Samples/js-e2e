@@ -28,7 +28,9 @@ These are client, server, or full-stack applications using Azure services - foun
 ## Resources
 
 * Azure
-    * [Azure Security Podcast](https://azsecuritypodcast.net/)  
+    * [Azure Security Podcast](https://azsecuritypodcast.net/) 
+    * Learn TV
+        * [The Launch Space](https://github.com/microsoft/TheLaunchSpace)
 * Developer Advocate resources - produced by advocates
 * Community resources - produced by members of the community
 
