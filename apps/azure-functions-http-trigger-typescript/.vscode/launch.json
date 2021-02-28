@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach to Node Functions",
+            "name": "Run Functions",
             "type": "node",
             "request": "attach",
             "port": 9229,
@@ -10,7 +10,7 @@
         },{
             "type": "node",
             "request": "launch",
-            "name": "Jest Tests",
+            "name": "Run Tests",
             "disableOptimisticBPs": true,
             "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
             "args": [

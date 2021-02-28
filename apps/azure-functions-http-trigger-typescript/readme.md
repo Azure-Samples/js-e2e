@@ -34,8 +34,13 @@ You can see this used in the test.
   "isValid": true
 }
 ```
+## Local Function runtime
+
+Use [Azure Function core tools](https://www.npmjs.com/package/azure-functions-core-tools) to run local function environment. If you run the project in the Docker container, core tools is already installed with the `./devcontainer.json/DockerFile`.
 
 ## Test local functions
+
+The boilerplate for the project was created with the Azure Functions VSCode extension. It didn't include the Jest integration, which was added afterward. 
 
 ```bash
 curl -i \
