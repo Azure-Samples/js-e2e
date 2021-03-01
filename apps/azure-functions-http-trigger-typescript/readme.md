@@ -38,13 +38,19 @@ You can see this used in the test.
 
 Use [Azure Function core tools](https://www.npmjs.com/package/azure-functions-core-tools) to run local function environment. If you run the project in the Docker container, core tools is already installed with the `./devcontainer.json/DockerFile`.
 
+## CORS
+
+## Function authentication
+
+Create the function (not the function app) with function-level authentication. This requires the requestor to pass an `x-functions-key` header with the key value (found in the Azure portal) to validate the requestor has proper auth to call the function.
+
 ## Test local functions
 
 The boilerplate for the project was created with the Azure Functions VSCode extension. It didn't include the Jest integration, which was added afterward. 
 
 ```bash
 curl -i \
-    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
     --request POST \
     --data '{"tweetText":"This is my tweet"}' \
     http://localhost:7071/api/validateTweet
@@ -52,14 +58,12 @@ curl -i \
 
 ## Test remote functions
 
-### validateTweet function
-
 ```bash
 curl -i \
-    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
     --header "x-functions-key: SEE-VALUE-IN-AZURE-PORTAL-FOR-FUNCTION" \
     --request POST \
     --data '{"tweetText":"This is my tweet"}' \
-    https://twitterfunctionjs.azurewebsites.net/api/validateTweet
+    https://YOUR-RESOURCE-NAME.azurewebsites.net/api/validateTweet
 ```
 

@@ -20,10 +20,20 @@ const validateTweetBody = (text): any => {
 To test locally:
 
 curl -i \
-    --header "Content-Type: application/json" \
+    --header "Accept: application/json" \
     --request POST \
     --data '{"tweetText":"This is my tweet"}' \
     http://localhost:7071/api/validateTweet
+    
+To test after deployed to Azure functions:
+
+curl -i \
+    --header "Accept: application/json" \
+    --header "x-functions-key: YOUR-FUNCTION-KEY" \
+    --request POST \
+    --data '{"tweetText":"This is my tweet"}' \
+    https://YOUR-RESOURCE-NAME.azurewebsites.net/api/validateTweet
+    
 */
 
 const httpTrigger: AzureFunction = async (context: Context, req: HttpRequest): Promise<any> => {
@@ -47,7 +57,10 @@ const httpTrigger: AzureFunction = async (context: Context, req: HttpRequest): P
     }
     */
     context.res = {
-        body: validation
+        body: validation,
+        headers: {
+            "Content-Type":"application/json"
+        }
     };
 
 };
