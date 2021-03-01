@@ -22,12 +22,15 @@ describe("Test for validateTweet Function", () => {
     test('200 - Http trigger returns success object', async () => {
 
         const request = {
-            body: { tweetText: "This is my tweet" }
+            body: { tweetText: "This is my tweet" },
+            headers: {
+                Accept: 'application/json'
+            }
         };
 
         await httpTrigger(context, request);
 
-        //expect(context.log).toBeCalledTimes(1);
+        expect(JSON.stringify(context.res.headers["Content-Type"]).includes('application/json')).toEqual(true)
         expect(JSON.stringify(context.res.body)).toEqual(JSON.stringify({
             "textReturn": "16 / 280",
             "isValid": true
