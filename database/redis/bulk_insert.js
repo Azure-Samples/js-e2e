@@ -5,7 +5,9 @@ const { finished } = require('stream/promises');
 
 const config = {
     "HOST": "YOUR-RESOURCE-NAME.redis.cache.windows.net",
-    "KEY": "YOUR-AZURE-REDIS-RESOURCE-KEY"
+    "KEY": "YOUR-RESOURCE-PASSWORD"
+    ,
+        "KEY_PREFIX": "demoExample:"
 }
 
 // Create Redis config object
@@ -17,7 +19,7 @@ const configuration = {
         servername: config.HOST
     },
     database: 0,
-    keyPrefix: config.prefix
+    keyPrefix: config.KEY_PREFIX
 }
 var redis = new Redis(configuration);
 

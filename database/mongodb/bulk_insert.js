@@ -1,4 +1,3 @@
-console.log(new Date())
 const { MongoClient } = require('mongodb');
 const ObjectId = require('mongodb').ObjectID;
 require('dotenv').config();
@@ -14,12 +13,14 @@ const DATABASE_NAME = process.env.DATABASE_NAME || 'my-tutorial-db';
 const DATABASE_COLLECTION_NAME =
     process.env.DATABASE_COLLECTION_NAME || 'my-collection';
 
+const csvFile = './books.csv'    
+    
 let mongoConnection = null;
 let db = null;
 let collection = null;
 
 
-// insert each row into Redis
+// insert each row into MongoDB
 const insertData = async (readable) =>{
     
     let i = 0;
@@ -37,7 +38,7 @@ const bulkInsert = async () => {
     
     // read file, parse CSV, each row is a chunk
     const readable = fs
-    .createReadStream('./books.csv')
+    .createReadStream(csvFile)
     .pipe(parse());
 
     // Pipe rows to insert function
@@ -47,10 +48,7 @@ const bulkInsert = async () => {
 
 bulkInsert().then(() => {
     console.log('done');
-    console.log(new Date())
 
 }).catch(err => {
     console.log(`done +  failed ${err}`)
-    console.log(new Date())
-
 })
