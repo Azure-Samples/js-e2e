@@ -3,7 +3,7 @@ const parse = require('csv-parser')
 const { finished } = require('stream/promises');
 const { SearchClient, SearchIndexClient, AzureKeyCredential } = require("@azure/search-documents");
 
-const SEARCH_ENDPOINT = "https://YOUR-REOURCE-NAME.search.windows.net";
+const SEARCH_ENDPOINT = "https://YOUR-RESOURCE-NAME.search.windows.net";
 const SEARCH_KEY = "YOUR-RESOURCE-KEY";
 
 const SEARCH_INDEX_NAME = "good-books";
