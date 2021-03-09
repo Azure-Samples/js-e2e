@@ -2,188 +2,145 @@
     "fields": [
         {
             "key": true,
-            "name": "book_id",
+            "name": "id",
             "type": "Edm.String",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "goodreads_book_id",
             "type": "Edm.String",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "best_book_id",
             "type": "Edm.String",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "work_id",
             "type": "Edm.String",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "books_count",
             "type": "Edm.Double",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "isbn",
             "type": "Edm.String",
             "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "searchable": true,
+            "analyzer": "standard.lucene"
         },
         {
             "name": "isbn13",
             "type": "Edm.String",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "authors",
-            "type": "Edm.String",
+            "type": "Collection(Edm.String)",
             "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "filterable": true,
+            "searchable": true,
+            "facetable":true,
+            "analyzer": "en.lucene"
         },
         {
             "name": "original_publication_year",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "original_title",
             "type": "Edm.String",
             "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "searchable": true,
+            "analyzer": "en.lucene"
         },
         {
             "name": "title",
             "type": "Edm.String",
             "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "searchable": true,
+            "analyzer": "en.lucene"
         },
         {
             "name": "language_code",
             "type": "Edm.String",
             "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "filterable": true,
+            "facetable": true
         },
         {
             "name": "average_rating",
             "type": "Edm.Int32",
             "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "filterable": true,
+            "sortable": true
         },
         {
             "name": "ratings_count",
             "type": "Edm.Int32",
             "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "filterable": true,
+            "facetable": true
         },
         {
             "name": "work_ratings_count",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "work_text_reviews_count",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "ratings_1",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "ratings_2",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "ratings_3",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "ratings_4",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "ratings_5",
             "type": "Edm.Int32",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "image_url",
             "type": "Edm.String",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         },
         {
             "name": "small_image_url",
             "type": "Edm.String",
-            "retrievable": true,
-            "filterable": false,
-            "searchable": false,
-            "sortable": false
+            "retrievable": true
         }
-    ]
+    ],
+	"suggesters": [
+		{
+			"name": "sg",
+			"searchMode": "analyzingInfixMatching",
+			"sourceFields": [
+				"authors",
+                "original_title"
+			]
+		}
+	]
 }

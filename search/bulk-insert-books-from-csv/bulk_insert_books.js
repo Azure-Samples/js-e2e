@@ -6,36 +6,39 @@ const { SearchClient, SearchIndexClient, AzureKeyCredential } = require("@azure/
 const SEARCH_ENDPOINT = "https://YOUR-REOURCE-NAME.search.windows.net";
 const SEARCH_KEY = "YOUR-RESOURCE-KEY";
 
-const SEARCH_INDEX_NAME = "book";
-const csvFile = './books.csv'    
+const SEARCH_INDEX_NAME = "good-books";
+const csvFile = './books.csv'
 const schema = require("./books.schema.json");
 
 const client = new SearchClient(
     SEARCH_ENDPOINT,
     SEARCH_INDEX_NAME,
-    new AzureKeyCredential( SEARCH_KEY)
+    new AzureKeyCredential(SEARCH_KEY)
 );
-const clientIndex = new SearchIndexClient(SEARCH_ENDPOINT, new AzureKeyCredential(SEARCH_KEY));
+const clientIndex = new SearchIndexClient(
+    SEARCH_ENDPOINT,
+    new AzureKeyCredential(SEARCH_KEY)
+);
 
 
 // insert each row into ...
-const insertData = async (readable) =>{
-    
+const insertData = async (readable) => {
+
     let i = 0;
-    
+
     for await (const row of readable) {
         console.log(`${i++} = ${JSON.stringify(row)}`);
-        
+
         const indexItem = {
-            "book_id": row.book_id,
+            "id": row.book_id,
             "goodreads_book_id": row.goodreads_book_id,
             "best_book_id": row.best_book_id,
             "work_id": row.work_id,
             "books_count": !row.books_count ? 0 : parseInt(row.books_count),
             "isbn": row.isbn,
             "isbn13": row.isbn13,
-            "authors": row.authors,
-            "original_publication_year": !row.original_publication_year ? 0: parseInt(row.original_publication_year),
+            "authors": row.authors.split(",").map(name => name.trim()),
+            "original_publication_year": !row.original_publication_year ? 0 : parseInt(row.original_publication_year),
             "original_title": row.original_title,
             "title": row.title,
             "language_code": row.language_code,
@@ -51,40 +54,44 @@ const insertData = async (readable) =>{
             "image_url": row.image_url,
             "small_image_url": row.small_image_url
         }
-       
+
 
         const uploadResult = await client.uploadDocuments([indexItem]);
     }
-    
+
 }
 const bulkInsert = async () => {
-    
-   
+
+
     // read file, parse CSV, each row is a chunk
     const readable = fs
-    .createReadStream(csvFile)
-    .pipe(parse());
+        .createReadStream(csvFile)
+        .pipe(parse());
 
     // Pipe rows to insert function
     await insertData(readable)
 }
 async function createIndex() {
-  
-    schema.name = SEARCH_INDEX_NAME.toLowerCase();
+
+    schema.name = SEARCH_INDEX_NAME;
     const result = await clientIndex.createIndex(schema);
-  
+
     console.log(result);
 }
-    
-    
-const main = async ()=> {
+
+
+const main = async () => {
 
     await createIndex();
+    console.log("index created");
+
     await bulkInsert();
 
 }
 
-    
+
 main()
     .then(() => console.log('done'))
-    .catch((err) => console.log(`done +  failed ${err}`));
+    .catch((err) => {
+        console.log(`done +  failed ${err}`)
+    });
