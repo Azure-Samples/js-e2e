@@ -6,8 +6,8 @@ const fs = require('fs');
 const parse = require('csv-parser')
 const { finished } = require('stream/promises');
 
-const DATABASE_URL = process.env.DATABASE_URL
-    ? process.env.DATABASE_URL
+const DATABASE_URL = process.env.YOUR_RESOURCE_PRIMARY_CONNECTION_STRING
+    ? process.env.YOUR_RESOURCE_PRIMARY_CONNECTION_STRING
     : 'mongodb://localhost:27017';
 const DATABASE_NAME = process.env.DATABASE_NAME || 'my-tutorial-db';
 const DATABASE_COLLECTION_NAME =
