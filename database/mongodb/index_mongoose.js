@@ -4,7 +4,7 @@
     const run = async () => {
       // connect to mongoose
       await mongoose.connect(
-        "YOUR-CONNECTION-STRING",
+        "YOUR_RESOURCE_PRIMARY_CONNECTION_STRING",
         {
           useNewUrlParser: true,
           useUnifiedTopology: true,
