@@ -1,0 +1,15 @@
+{
+    "id": "/subscriptions/MY-SUBSCRIPTION/resourceGroups/MY-RESOURCE-GROUP/providers/Microsoft.Web/sites/MY-RESOURCE-NAME/config/appsettings",
+    "name": "appsettings",
+    "type": "Microsoft.Web/sites/config",
+    "properties": {
+        "APPINSIGHTS_INSTRUMENTATIONKEY": "MY-APP-INSIGHTS-KEY",
+        "APPLICATIONINSIGHTS_CONNECTION_STRING": "InstrumentationKey=MY-APP-INSIGHTS-KEY;IngestionEndpoint=https://centralus-0.in.applicationinsights.azure.com/",
+        "ApplicationInsightsAgent_EXTENSION_VERSION": "~2",
+        "CUSTOM_KEY": "ABC_123",
+        "MICROSOFT_PROVIDER_AUTHENTICATION_SECRET": "MY-SECRET",
+        "XDT_MicrosoftApplicationInsights_Mode": "default"
+    },
+    "location": "Central US",
+    "tags": {}
+}
