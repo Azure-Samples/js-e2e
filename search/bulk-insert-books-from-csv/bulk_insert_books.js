@@ -1,3 +1,5 @@
+// Works with Node.js 15+
+
 const fs = require('fs');
 const parse = require('csv-parser')
 const { finished } = require('stream/promises');
