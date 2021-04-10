@@ -1,0 +1,16 @@
+{
+  "name": "azure-resources",
+  "version": "1.0.0",
+  "description": "",
+  "main": "resource-group.js",
+  "scripts": {
+    "start": "node resource-group.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@azure/arm-resources": "^4.0.0",
+    "@azure/ms-rest-nodeauth": "^3.0.9"
+  }
+}
