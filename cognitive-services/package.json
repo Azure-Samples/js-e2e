@@ -1,0 +1,16 @@
+{
+  "name": "cognitive-services",
+  "version": "1.0.0",
+  "description": "",
+  "main": "face.js",
+  "scripts": {
+    "start": "node face.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/cognitiveservices-face": "^4.2.0",
+    "@azure/ms-rest-js": "^2.3.0"
+  }
+}
