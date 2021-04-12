@@ -1,6 +1,6 @@
 /*
 
-Create an Azure Cognitive Services resource group. 
+Create an Azure resource group. 
 
 Requires:
 

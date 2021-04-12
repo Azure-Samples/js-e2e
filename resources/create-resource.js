@@ -69,9 +69,9 @@ const createAzureFaceResource = async (credentials) => {
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
 
-  longRunningOperationResult = resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+  longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
 
-  console.log(longRunningOperation)
+  console.log(longRunningOperationResult)
 
 }
 
