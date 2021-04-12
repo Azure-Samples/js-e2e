@@ -20,8 +20,7 @@ References:
 
 */
 
-const msRest = require("@azure/ms-rest-js");
-const msRestAzure = require("@azure/ms-rest-azure-js");
+
 const msRestNodeAuth = require("@azure/ms-rest-nodeauth");
 const { ResourceManagementClientContext, Resources } = require("@azure/arm-resources");
 
