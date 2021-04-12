@@ -23,7 +23,7 @@ References:
 const msRest = require("@azure/ms-rest-js");
 const msRestAzure = require("@azure/ms-rest-azure-js");
 const msRestNodeAuth = require("@azure/ms-rest-nodeauth");
-const { ResourceManagementClient, ResourceManagementModels, ResourceManagementMappers, ResourceManagementClientContext, Resources, GenericResource } = require("@azure/arm-resources");
+const { ResourceManagementClientContext, Resources } = require("@azure/arm-resources");
 
 const createAzureFaceResource = async (credentials) => {
 
