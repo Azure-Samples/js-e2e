@@ -20,8 +20,7 @@ References:
 
 */
 
-const msRest = require("@azure/ms-rest-js");
-const msRestAzure = require("@azure/ms-rest-azure-js");
+
 const msRestNodeAuth = require("@azure/ms-rest-nodeauth");
 const { ResourceManagementClientContext, Resources } = require("@azure/arm-resources");
 
@@ -70,9 +69,9 @@ const createAzureFaceResource = async (credentials) => {
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
 
-  longRunningOperationResult = resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+  longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
 
-  console.log(longRunningOperation)
+  console.log(longRunningOperationResult)
 
 }
 
