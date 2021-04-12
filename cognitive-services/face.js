@@ -30,46 +30,45 @@ const client = new Face.FaceClient(credentials, endpoint);
 
 
 const image_base_url = "https://csdx.blob.core.windows.net/resources/Face/Images/";
-const person_group_id = uuid();
 
+const detectImage = async (imageUrl) => {
 
-const detectImage = async (image_file_name) => {
-    
     const options = {
-        returnFaceAttributes: ["Accessories","Age","Blur","Emotion","Exposure","FacialHair","Gender","Glasses","Hair","HeadPose","Makeup","Noise","Occlusion","Smile"],
-        
+        returnFaceAttributes: ["Accessories", "Age", "Blur", "Emotion", "Exposure", "FacialHair", "Gender", "Glasses", "Hair", "HeadPose", "Makeup", "Noise", "Occlusion", "Smile"],
+
         // detection model 1 = retrieving attributes.
         detectionModel: "detection_01"
     }
-    
-    return await client.face.detectWithUrl(image_base_url + image_file_name, options);
+
+    return await client.face.detectWithUrl(imageUrl, options);
 };
 
 const processImageList = async () => {
 
     // Create a list of images
-	const image_file_names = [
-		"detection1.jpg",    // single female with glasses
-		"detection5.jpg",    // family, woman child man
-		"detection6.jpg"     // elderly couple, male female
+    const image_file_names = [
+        "detection1.jpg",    // single female with glasses
+        "detection5.jpg",    // family, woman child man
+        "detection6.jpg"     // elderly couple, male female
     ];
-    
+
     let results = [];
 
-    for (let i = 0; i < image_file_names.length; i++){
-        
+    for (let i = 0; i < image_file_names.length; i++) {
+
         const imageUrl = `${image_base_url}${image_file_names[i]}`;
+        console.log(imageUrl);
         
         const detectImageResult = await detectImage(imageUrl);
         console.log("pushing " + i);
         results.push(detectImageResult);
     }
-    
+
     return results;
 }
 
-processImageList.then(results => {
-    console.log (JSON.stringify(results));
+processImageList().then(results => {
+    console.log(JSON.stringify(results));
 }).catch(err => {
     console.log(err);
 })
