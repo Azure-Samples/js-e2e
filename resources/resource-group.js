@@ -1,22 +1,38 @@
-// https://docs.microsoft.com/en-us/javascript/api/overview/azure/resources
+/*
+
+Create an Azure Cognitive Services resource group. 
+
+Requires:
+
+Azure subscription already exists. Value is equired in the code:
+* "REPLACE-WITH-YOUR-SUBSCRIPTION-ID"
+
+Add your email alias, the part before the `@` symbol, to your naming convention:
+* "REPLACE-WITH-YOUR-EMAIL-ALIAS"
+* "REPLACE-WITH-YOUR-APP-NAME"
+
+References: 
+* [Azure SDK Ref Docs for Resources](https://docs.microsoft.com/en-us/javascript/api/overview/azure/resources)
+
+*/
 
 const msRest = require("@azure/ms-rest-js");
 const msRestAzure = require ("@azure/ms-rest-azure-js");
 const msRestNodeAuth = require ("@azure/ms-rest-nodeauth");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
-const myEmailAlias = process.env["my-email-alias"] || "YOUR-EMAIL-ALIAS";
-const myAppName = process.env["my-app-name"] || "YOUR-APP-NAME";
+const myEmailAlias = process.env["EMAIL-ALIAS"] || "REPLACE-WITH-YOUR-EMAIL-ALIAS";
+const myAppName = process.env["APP-NAME"] || "REPLACE-WITH-YOUR-APP-NAME";
 
-const subscriptionId = process.env["my-azure-subscription-id"] || "YOUR-SUBSCRIPTION-ID";
+const subscriptionId = process.env["SUBSCRIPTION-ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION-ID";
 
 const resourceCreatedDate = new Date().toISOString();
-const resourceGroupName = `${myAppName}-resource-group-2`;
+const resourceGroupName = `${myAppName}-resource-group`;
 const resourceGroupLocation = "eastus";
 const resourceGroupFilter = `tagName eq 'owner' and tagValue eq '${myEmailAlias}'`;
 const resourceGroupTop = 10;
 
-const main = async (credentials) => {
+const resourceGroupActions = async (credentials) => {
 
     try {
 
@@ -63,6 +79,6 @@ const main = async (credentials) => {
     }
 }
 
-msRestNodeAuth.interactiveLogin().then(async (creds) => {
-        await main(creds);
+msRestNodeAuth.interactiveLogin().then(async (credentials) => {
+        await resourceGroupActions(credentials);
 }).catch (err=> { console.log(err) });

@@ -2,17 +2,18 @@
 
 Create an Azure Cognitive Services Face resource. 
 
-Assumes:
+Requires:
 
 Azure subscription and Azure resource group already exists. Both are required in the code:
-* "MY-SUBSCRIPTION-ID"
-* "MY-RESOURCE-GROUP-NAME"
+* "REPLACE-WITH-YOUR-SUBSCRIPTION-ID"
+* "REPLACE-WITH-YOUR-RESOURCE-GROUP-NAME"
 
 Add your email alias, the part before the `@` symbol, to your naming convention:
-* "YOUR-EMAIL-ALIAS"
-* "YOUR-APP-NAME"
+* "REPLACE-WITH-YOUR-EMAIL-ALIAS"
+* "REPLACE-WITH-YOUR-APP-NAME"
 
 References: 
+* [Azure SDK Ref Docs for resource creation](https://docs.microsoft.com/en-us/javascript/api/@azure/arm-resources/resources?view=azure-node-latest)
 * [Resource provider names](https://docs.microsoft.com/en-us/azure/azure-resource-manager/management/azure-services-resource-providers)
 * [Get versions](https://github.com/Azure/azure-rest-api-specs) - versions are used as subfolders in the REST API repo
 
@@ -31,8 +32,8 @@ const createAzureFaceResource = async (credentials) => {
   const resources = new Resources(resourceManagementClientContext);
 
   // REPLACE WITH YOUR VALUES
-  const subscriptionId = "MY-SUBSCRIPTION-ID";
-  const resourceGroupName = "MY-RESOURCE-GROUP-NAME";
+  const subscriptionId = "REPLACE-WITH-YOUR-SUBSCRIPTION-ID";
+  const resourceGroupName = "REPLACE-WITH-YOUR-RESOURCE-GROUP-NAME";
 
   // These are specific to the Azure Cognitive Services Face API
   const resourceProviderNamespace = "Microsoft.CognitiveServices";
@@ -44,8 +45,8 @@ const createAzureFaceResource = async (credentials) => {
     type: "Microsoft.CognitiveServices/accounts",
     location: "eastus",
     tags: {
-      alias: "YOUR-EMAIL-ALIAS",
-      app: "YOUR-APP-NAME"
+      alias: process.env["EMAIL-ALIAS"] || "REPLACE-WITH-YOUR-EMAIL-ALIAS",
+      app: process.env["APP-NAME"] || "REPLACE-WITH-YOUR-APP-NAME"
     },
     sku: {
       name: "F0"
