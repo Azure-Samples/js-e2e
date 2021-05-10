@@ -17,6 +17,8 @@ These are client, server, or full-stack applications using Azure services - foun
 |Sample|corresponding docs|
 |--|--|
 |[Client Azure login button](https://github.com/Azure-Samples/js-e2e-client-azure-login-button)|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/tutorial/single-page-application-azure-login-button-sdk-msal)|
+|Add easy authentication to app|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-web-app/add-authentication-to-web-app)|
+|[Add MSAL authentication to Express.js app](https://github.com/Azure-Samples/js-e2e-web-app-server-auth.git)||
 |[Client file upload to Azure Storage Blobs](https://github.com/Azure-Samples/js-e2e-browser-file-upload-storage-blob)|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/tutorial/browser-file-upload-azure-storage-blob)|
 |[Static Web App Client using Cognitive Services Computer Vision](https://github.com/Azure-Samples/js-e2e-client-cognitive-services/blob/main/.github/workflows/sample-github-workflow.yml)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/static-web-app/introduction)|
 |[Server](https://github.com/Azure-Samples/js-e2e-express-server)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/tutorial-vscode-azure-cli-node/tutorial-vscode-azure-cli-node-01)|
