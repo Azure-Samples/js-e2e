@@ -1,3 +1,27 @@
+---
+page_type: sample
+languages:
+- javascript
+- typescript
+- nodejs
+name: "JavaScript end-to-end samples"
+description: "These samples are part of the documentation for the Azure JavaScript Developer Center - https://docs.microsoft.com/azure/developer/javascript/."
+products:
+- azure
+- azure-functions
+- azure-cognitive-services
+- azure-cosmos-db
+- azure-database-mariadb
+- azure-database-mysql
+- azure-database-postgresql
+- azure-cache-redis
+- azure-key-vault
+- azure-resource-manager
+- azure-cognitive-search
+- azure-portal
+- vs-code
+---
+
 # JavaScript end to end samples
 
 These samples are part of the documentation for the [Azure JavaScript Developer Center](https://docs.microsoft.com/azure/developer/javascript/). 
