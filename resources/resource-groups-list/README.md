@@ -28,10 +28,12 @@
 
 4. Create new environment variables. These environment variables are REQUIRED for the context to use DefaultAzureCredential.
 
+    ```
     AZURE_TENANT_ID: `tenant` from the service principal output above.
     AZURE_CLIENT_ID: `appId` from the service principal output above.
     AZURE_CLIENT_SECRET: `password` from the service principal output above.
-    AZURE_SUBSCRIPTION: Your default subscription containing your resource groups.                             
+    AZURE_SUBSCRIPTION: Your default subscription containing your resource groups.
+    ```                             
 
 5. Complete the following commands from a bash terminal to install package dependencies:
 
