@@ -1,6 +1,9 @@
-// used to prettify the JSON
-const stringifyObject = require('stringify-object');
+// Include npm dependencies
+const stringifyObject = require('stringify-object'); // used to prettify the JSON only
+const { DefaultAzureCredential } = require("@azure/identity");
+const { ResourceManagementClient } = require("@azure/arm-resources");
 
+// Get subscription from environment variables
 const subscriptionId = process.env["AZURE_SUBSCRIPTION"];
 if (!subscriptionId) throw Error("Azure Subscription is missing from environment variables.")
 
@@ -14,13 +17,13 @@ if (!clientId) throw Error("AZURE_CLIENT_ID is missing from environment variable
 const secret = process.env["AZURE_CLIENT_SECRET"];
 if (!secret) throw Error("AZURE_CLIENT_SECRET is missing from environment variables.")
 
-// import Azure npm dependency for Identity credential method
-const { DefaultAzureCredential } = require("@azure/identity");
+// Create Azure authentication credentials
 const credentials = new DefaultAzureCredential();
 
-const { ResourceManagementClient } = require("@azure/arm-resources");
+// Create Azure SDK client for Resource Management such as resource groups
 const resourceManagement = new ResourceManagementClient(credentials, subscriptionId);
 
+// List resource groups in subscription
 resourceManagement.resourceGroups.list()
 .then(result=>{
 
