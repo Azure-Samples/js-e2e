@@ -1,4 +1,4 @@
-# View resource groups in subscription with Azure SDK for JavaScript
+# Create resource group in subscription with Azure SDK for JavaScript
 
 1. Sign in to Azure CLI in terminal. 
 
@@ -8,7 +8,7 @@
 
 
 1. Create service principal with Azure CLI, replace `YOUR-SERVICE-PRINCIPAL-NAME` with a name 
-    such as `joesmith-quickstart-azure`: 
+    such as `jsmith-quickstart-azure`: 
 
     ```bash
     az ad sp create-for-rbac --name YOUR-SERVICE-PRINCIPAL-NAME   
@@ -19,8 +19,8 @@
     ```json
     {
         "appId": "717...",
-        "displayName": "joesmith-quickstart-azure",
-        "name": "http://joesmith-quickstart-azure",
+        "displayName": "jsmith-quickstart-azure",
+        "name": "http://jsmith-quickstart-azure",
         "password": "PEG...",
         "tenant": "72f..."
     }
@@ -47,22 +47,15 @@
     npm start
     ```
 
-1. Pretty output looks like
+1. Output looks like
 
     ```JSON
-    [
-        {
-                id: "/subscriptions/12345/resourceGroups/DefaultResourceGroup-WUS2",
-                name: "DefaultResourceGroup-WUS2",
-                type: "Microsoft.Resources/resourceGroups",
-                properties: {
-                    provisioningState: "Succeeded"
-                },
-                location: "westus2",
-                tags: {}
-        },
-        {
-            ...
-        }
-    ]
+    {
+        id: '/subscriptions/12345/resourceGroups/jsmith-ResourceGroup',
+        name: 'jsmith-ResourceGroup',
+        type: 'Microsoft.Resources/resourceGroups',
+        properties: { provisioningState: 'Succeeded' },
+        location: 'westus',
+        tags: { createdBy: 'jsmith' }
+    } 
     ```

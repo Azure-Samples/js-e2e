@@ -1,0 +1,16 @@
+{
+  "name": "resource-group-create",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/arm-resources": "^4.2.1",
+    "@azure/identity": "^1.5.2",
+    "stringify-object": "^4.0.0"
+  }
+}

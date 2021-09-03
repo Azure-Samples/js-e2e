@@ -1,8 +1,8 @@
 {
-  "name": "azure-resources",
+  "name": "list-azure-resource-groups",
   "version": "1.0.0",
   "description": "",
-  "main": "resource-group.js",
+  "main": "resource-groups-list.js",
   "scripts": {
     "start": "node resource-group.js",
     "test": "echo \"Error: no test specified\" && exit 1"

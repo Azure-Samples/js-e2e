@@ -1,5 +1,4 @@
 // Include npm dependencies
-const stringifyObject = require('stringify-object'); // used to prettify the JSON only
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
@@ -23,15 +22,33 @@ const credentials = new DefaultAzureCredential();
 // Create Azure SDK client for Resource Management such as resource groups
 const resourceManagement = new ResourceManagementClient(credentials, subscriptionId);
 
+const ownerAlias = "jsmith";
+const location = "westus";
+
+// Resource group definition
+const resourceGroupName = `${ownerAlias}-ResourceGroup`;
+const resourceGroupParameters = {
+    location: location,
+    tags: { createdBy: ownerAlias },
+  };
+
 // List resource groups in subscription
-resourceManagement.resourceGroups.list()
-.then(result=>{
+resourceManagement.resourceGroups.createOrUpdate(
+    resourceGroupName,
+    resourceGroupParameters
+).then(result=>{
 
-    const prettyJsonResult = stringifyObject(result, {
-        indent: '  ',
-        singleQuotes: false
-    });
+    console.log(result);
 
-    console.log(prettyJsonResult);
+    /*
+    {
+    id: '/subscriptions/12345/resourceGroups/jsmith-ResourceGroup',
+    name: 'jsmith-ResourceGroup',
+    type: 'Microsoft.Resources/resourceGroups',
+    properties: { provisioningState: 'Succeeded' },
+    location: 'westus',
+    tags: { createdBy: 'jsmith' }
+    } 
+    */
 
 }).catch(err=>{console.log(err)});
