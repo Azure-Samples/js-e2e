@@ -1,0 +1,16 @@
+{
+  "name": "create-new-container",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/arm-storage": "^16.1.1",
+    "@azure/identity": "^1.5.2",
+    "@azure/storage-blob": "^12.7.0"
+  }
+}
