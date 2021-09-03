@@ -4,7 +4,7 @@ const { DefaultAzureCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
 // Get subscription from environment variables
-const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
+const subscriptionId = process.env["AZURE_SUBSCRIPTION"];
 if (!subscriptionId) throw Error("Azure Subscription is missing from environment variables.")
 
 // The following code is only used to check you have environment

@@ -1,4 +1,4 @@
-# View resource groups in subscription with Azure SDK for JavaScript
+# View resource groups in subscription
 
 1. Sign in to Azure CLI in terminal. 
 
@@ -32,14 +32,17 @@
     AZURE_TENANT_ID: `tenant` from the service principal output above.
     AZURE_CLIENT_ID: `appId` from the service principal output above.
     AZURE_CLIENT_SECRET: `password` from the service principal output above.
-    AZURE_SUBSCRIPTION_ID: Your default subscription containing your resource groups.
+    AZURE_SUBSCRIPTION: Your default subscription containing your resource groups.
     ```                             
 
 1. Complete the following commands from a bash terminal to install package dependencies:
 
     ```bash
-    npm install @azure/identity @azure/arm-resources  --save
+    npm install @azure/identity @azure/arm-resources stringify-object
     ```
+
+    Note: `stringify-object` is only used to provide readable JSON. It is 
+    not required to use Azure SDKs. 
 
 1. Run this script from a bash terminal to see a list of resource groups in your default subscription:
 
@@ -52,7 +55,7 @@
     ```JSON
     [
         {
-                id: "/subscriptions/12345/resourceGroups/DefaultResourceGroup-WUS2",
+                id: "/subscriptions/bb8.../resourceGroups/DefaultResourceGroup-WUS2",
                 name: "DefaultResourceGroup-WUS2",
                 type: "Microsoft.Resources/resourceGroups",
                 properties: {
