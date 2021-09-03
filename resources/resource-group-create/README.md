@@ -51,11 +51,11 @@
 
     ```JSON
     {
-        'id': '/subscriptions/12345/resourceGroups/jsmith-ResourceGroup',
-        'name': 'jsmith-ResourceGroup',
-        'type': 'Microsoft.Resources/resourceGroups',
-        'properties': { 'provisioningState': 'Succeeded' },
-        'location': 'westus',
-        'tags': { 'createdBy': 'jsmith' }
+        "id": "/subscriptions/12345/resourceGroups/jsmith-ResourceGroup",
+        "name": "jsmith-ResourceGroup",
+        "type": "Microsoft.Resources/resourceGroups",
+        "properties": { "provisioningState": "Succeeded" },
+        "location": "westus",
+        "tags": { "createdBy": "jsmith" }
     } 
     ```
