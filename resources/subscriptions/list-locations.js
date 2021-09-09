@@ -1,6 +1,5 @@
-// Include npm dependencies
 const { DefaultAzureCredential } = require("@azure/identity");
-const { ResourceManagementClient } = require("@azure/arm-resources");
+const { SubscriptionClient } = require("@azure/arm-subscriptions");
 
 // Get subscription from environment variables
 const subscriptionId = process.env["AZURE_SUBSCRIPTION"];
@@ -16,16 +15,21 @@ if (!clientId) throw Error("AZURE_CLIENT_ID is missing from environment variable
 const secret = process.env["AZURE_CLIENT_SECRET"];
 if (!secret) throw Error("AZURE_CLIENT_SECRET is missing from environment variables.")
 
-// Create Azure authentication credentials
-const credentials = new DefaultAzureCredential();
+if (!subscriptionId || !tenantId || !clientId || !secret) return;
 
-// Create Azure SDK client for Resource Management such as resource groups
-const resourceManagement = new ResourceManagementClient(credentials, subscriptionId);
+try {
+  const credentials = new DefaultAzureCredential();
+  const client = new SubscriptionClient(credentials, subscriptionId);
+  client.subscriptions.listLocations(subscriptionId).then((result) => {
+    console.log("The result is:");
+    console.log(result);
+  }).catch((err) => {
+    console.log("An error occurred:");
+    console.error(err);
+  });
+} catch (err) {
+  console.log("An error occurred:");
+  console.error(err);
+};
 
-// List resource groups in subscription
-resourceManagement.resourceGroups.list()
-.then(result=>{
 
-    console.log(JSON.stringify(result));
-
-}).catch(err=>{console.log(err)});
