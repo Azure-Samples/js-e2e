@@ -1,6 +1,7 @@
 const { DefaultAzureCredential } = require("@azure/identity");
 const { MonitorManagementClient } = require("@azure/arm-monitor");
 const dayjs = require('dayjs');
+const { prettyPrint } = require('@base2/pretty-print-object');
 
 // resource group - returns all resource groups if not specified
 const resourceGroupName = "";
@@ -40,7 +41,7 @@ client.activityLogs.list(filter).then((result) => {
       "eventTimestamp": element.eventTimestamp
   })});
 
-  console.log(arrObjects);
+  console.log(prettyPrint(arrObjects));
 }).catch((err) => {
   console.log("An error occurred:");
   console.log(err);
