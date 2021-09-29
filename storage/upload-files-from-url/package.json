@@ -1,0 +1,16 @@
+{
+  "name": "upload-files-from-url",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/storage-blob": "^12.8.0",
+    "@azure/storage-file-share": "^12.8.0"
+  }
+}
