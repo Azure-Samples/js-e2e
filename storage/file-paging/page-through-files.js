@@ -52,7 +52,7 @@ const getPage = async (directoryClient, continuationToken) => {
   pageResponse = (await pageIterator.next()).value;
   return pageResponse;
 }
-async function copy() {
+const list = async () =>{
 
   // Get Azure SDK Storage clients for this task
   const { fileDirectoryClient } = getFileDirectoryAccountClient();
@@ -83,7 +83,7 @@ async function copy() {
   } while (continuationToken !== "");
 }
 
-copy()
+list()
   .then(() =>
     console.log(`done`)
   ).catch((ex) =>
