@@ -12,14 +12,14 @@ const {
 const pageSize = 2;
 
 // COPY FROM THIS RESOURCE
-const fileAccountName = process.env["AzureStorageResourceNameForFiles"] || "diberryfileupload";
-const fileAccountKey = process.env["AzureStorageResourceKeyForFiles"] || "GmkAZbYhTVz7lbcyHNJuoTT52RmFQj8nR170NOBHUNCrV1pHulNaq2Ch9yTDhIEWmE8PSrjzoFzb//tt6YE8TQ==";
-const fileAccountShareName = process.env["AzureStorageResourceShareNameForFiles"] || "diberryfile1";
-const fileAccountDirectoryName = process.env["AzureStorageResourceDirectoryNameForFiles"] || "test1";
+const fileAccountName = process.env["AzureStorageResourceNameForFiles"] || "";
+const fileAccountKey = process.env["AzureStorageResourceKeyForFiles"] || "";
+const fileAccountShareName = process.env["AzureStorageResourceShareNameForFiles"] || "";
+const fileAccountDirectoryName = process.env["AzureStorageResourceDirectoryNameForFiles"] || "";
 
 // COPY TO THIS RESOURCE
-const blobAccountConnectionString = process.env["AzureStorageResourceConnectionString"] || "DefaultEndpointsProtocol=https;AccountName=diberryfileupload;AccountKey=GmkAZbYhTVz7lbcyHNJuoTT52RmFQj8nR170NOBHUNCrV1pHulNaq2Ch9yTDhIEWmE8PSrjzoFzb//tt6YE8TQ==;EndpointSuffix=core.windows.net";
-const blobAccountDirectoryName = process.env["AzureStorageResourceDirectoryNameForBlobs"] || "test1";
+const blobAccountConnectionString = process.env["AzureStorageResourceConnectionString"] || "";
+const blobAccountDirectoryName = process.env["AzureStorageResourceDirectoryNameForBlobs"] || "";
 
 // Create From client
 const getFileDirectoryAccountClient = () => {
