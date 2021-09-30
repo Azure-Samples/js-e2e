@@ -1,7 +1,7 @@
 const { BlobServiceClient } = require("@azure/storage-blob");
 
-const blobAccountConnectionString = "";
-const blobAccountDirectoryName = "";
+const blobAccountConnectionString = "REPLACE-WITH-YOUR-STORAGE-CONNECTION-STRING";
+const blobAccountContainerName = "REPLACE-WITH-YOUR-STORAGE-CONTAINER-NAME";
 
 const pageSize = 2;
 
@@ -16,7 +16,7 @@ const list = async () => {
 
   // Get Blob Container - need to have items in container before running this code
   const blobServiceClient = BlobServiceClient.fromConnectionString(blobAccountConnectionString);
-  containerClient = blobServiceClient.getContainerClient(blobAccountDirectoryName);
+  containerClient = blobServiceClient.getContainerClient(blobAccountContainerName);
 
   do {
 
