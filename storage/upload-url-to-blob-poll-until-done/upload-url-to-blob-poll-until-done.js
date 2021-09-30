@@ -34,9 +34,6 @@ const upload = async() => {
   // get container's directory client
   const containerClient = blobServiceClient.getContainerClient(blobAccountDirectoryName);
 
-  // create container if it doesn't already exist
-  await containerClient.createIfNotExists();
-
   files.forEach(async(file) =>{
     await (
 
