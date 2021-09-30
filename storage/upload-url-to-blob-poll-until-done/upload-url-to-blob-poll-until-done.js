@@ -1,7 +1,7 @@
 const { BlobServiceClient } = require("@azure/storage-blob");
 
-const blobAccountConnectionString = process.env["AzureStorageResourceConnectionString"] || "";
-const blobAccountDirectoryName = process.env["AzureStorageResourceDirectoryNameForBlobs"] || `test-${Date.now().toString()}`;
+const blobAccountConnectionString = "";
+const blobAccountDirectoryName = `test-${Date.now().toString()}`;
 
 const files = [
   {
