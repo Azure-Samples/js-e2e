@@ -1,7 +1,7 @@
 const { BlobServiceClient } = require("@azure/storage-blob");
 
 const blobAccountConnectionString = "REPLACE-WITH-YOUR-STORAGE-CONNECTION-STRING";
-const blobAccountDirectoryName = `test-${Date.now().toString()}`;
+const blobAccountContainerName = `test-${Date.now().toString()}`;
 
 const files = [
   {
@@ -32,7 +32,7 @@ const upload = async() => {
   const blobServiceClient = BlobServiceClient.fromConnectionString(blobAccountConnectionString);
 
   // get container's directory client
-  const containerClient = blobServiceClient.getContainerClient(blobAccountDirectoryName);
+  const containerClient = blobServiceClient.getContainerClient(blobAccountContainerName);
 
   files.forEach(async(file) =>{
     await (
