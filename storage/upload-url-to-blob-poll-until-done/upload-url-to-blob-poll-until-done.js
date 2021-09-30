@@ -45,17 +45,8 @@ const upload = async() => {
   })
 }
 
-
-const main = async () =>{
-
-  await upload();
-
-}
-
-main(() => {
+upload(() => {
   console.log("done");
 }).catch((ex) =>
   console.log(ex)
 );
-
-
