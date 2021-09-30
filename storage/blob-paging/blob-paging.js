@@ -21,7 +21,10 @@ const list = async () => {
   do {
 
     // Get Page of Blobs
-    iterator = (continuationToken != "") ? containerClient.listBlobsFlat().byPage({ maxPageSize: pageSize, continuationToken }) : containerClient.listBlobsFlat().byPage({ maxPageSize: pageSize });
+    iterator = (continuationToken != "") 
+      ? containerClient.listBlobsFlat().byPage({ maxPageSize: pageSize, continuationToken }) 
+      : containerClient.listBlobsFlat().byPage({ maxPageSize: pageSize });
+    
     page = (await iterator.next()).value;
 
     // Display list
