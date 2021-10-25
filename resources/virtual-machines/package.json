@@ -1,0 +1,19 @@
+{
+  "name": "virtual-machines",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:test": "node azure-arm-compute.js -o start -s bb881e62-cf77-4d5d-89fb-29d71e930b66 -g dina-temp -v diberry-vm-1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/arm-compute": "^16.5.0",
+    "@azure/identity": "^2.0.0",
+    "dotenv": "^10.0.0",
+    "yargs": "^17.2.1"
+  }
+}
