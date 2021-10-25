@@ -1,4 +1,5 @@
 const { DefaultAzureCredential } = require("@azure/identity");
+
 const { AuthorizationManagementClient } = require("@azure/arm-authorization");
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 
