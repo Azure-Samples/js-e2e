@@ -8,7 +8,7 @@ const clientId = process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID"
 const secret = process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
 
-const resourceGroupName = "REPLACE-WITHYOUR-RESOURCE_GROUP-NAME";
+const resourceGroupName = "REPLACE-WITH-YOUR-RESOURCE_GROUP-NAME";
 
 if(process.env.production){
 
