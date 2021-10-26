@@ -21,18 +21,6 @@ const yourAlias = "diberry";
 // CHANGE THIS - used to add tags to resources
 const projectName = "azure-samples-create-vm"
 
-//Random number generator for service names and settings
-const resourceGroupName = _generateRandomId(`${yourAlias}-testrg`, randomIds);
-const vmName = _generateRandomId(`${yourAlias}vm`, randomIds);
-const storageAccountName = _generateRandomId(`${yourAlias}ac`, randomIds);
-const vnetName = _generateRandomId(`${yourAlias}vnet`, randomIds);
-const subnetName = _generateRandomId(`${yourAlias}subnet`, randomIds);
-const publicIPName = _generateRandomId(`${yourAlias}pip`, randomIds);
-const networkInterfaceName = _generateRandomId(`${yourAlias}nic`, randomIds);
-const ipConfigName = _generateRandomId(`${yourAlias}crpip`, randomIds);
-const domainNameLabel = _generateRandomId(`${yourAlias}domainname`, randomIds);
-const osDiskName = _generateRandomId(`${yourAlias}osdisk`, randomIds);
-
 // Resource configs
 const location = "eastus";
 const accType = "Standard_LRS";
@@ -275,9 +263,21 @@ const _generateRandomId = (prefix, existIds) => {
   return newNumber;
 };
 
+//Random number generator for service names and settings
+const resourceGroupName = _generateRandomId(`${yourAlias}-testrg`, randomIds);
+const vmName = _generateRandomId(`${yourAlias}vm`, randomIds);
+const storageAccountName = _generateRandomId(`${yourAlias}ac`, randomIds);
+const vnetName = _generateRandomId(`${yourAlias}vnet`, randomIds);
+const subnetName = _generateRandomId(`${yourAlias}subnet`, randomIds);
+const publicIPName = _generateRandomId(`${yourAlias}pip`, randomIds);
+const networkInterfaceName = _generateRandomId(`${yourAlias}nic`, randomIds);
+const ipConfigName = _generateRandomId(`${yourAlias}crpip`, randomIds);
+const domainNameLabel = _generateRandomId(`${yourAlias}domainname`, randomIds);
+const osDiskName = _generateRandomId(`${yourAlias}osdisk`, randomIds);
+
 main()
   .then(() => {
-    console.log("success " + resourceGroupName);
+    console.log("success - resource group name: " + resourceGroupName);
   })
   .catch((err) => {
     console.log(err);
