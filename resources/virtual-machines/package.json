@@ -1,0 +1,19 @@
+{
+  "name": "virtual-machines",
+  "version": "1.0.0",
+  "description": "",
+  "main": "create-vm.js",
+  "dependencies": {
+    "@azure/arm-compute": "^16.5.0",
+    "@azure/arm-network": "^25.2.0",
+    "@azure/arm-resources": "^4.2.2",
+    "@azure/arm-storage": "^16.1.2",
+    "@azure/identity": "^2.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
