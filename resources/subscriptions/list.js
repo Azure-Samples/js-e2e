@@ -1,61 +1,63 @@
-const { DefaultAzureCredential } = require("@azure/identity");
+const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
 const { SubscriptionClient } = require("@azure/arm-subscriptions");
 
-// Get subscription from environment variables
-const subscriptionId = process.env["AZURE_SUBSCRIPTION"];
-if (!subscriptionId) throw Error("Azure Subscription is missing from environment variables.")
+let credentials = null;
 
-// The following code is only used to check you have environment
-// variables configured. The DefaultAzureCredential reads your
-// environment - it doesn't read these variables. 
-const tenantId = process.env["AZURE_TENANT_ID"];
-if (!tenantId) throw Error("AZURE_TENANT_ID is missing from environment variables.")
-const clientId = process.env["AZURE_CLIENT_ID"];
-if (!clientId) throw Error("AZURE_CLIENT_ID is missing from environment variables.")
-const secret = process.env["AZURE_CLIENT_SECRET"];
-if (!secret) throw Error("AZURE_CLIENT_SECRET is missing from environment variables.")
+const tenantId = process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID"; 
+const clientId = process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID"; 
+const secret = process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
 
-if (!subscriptionId || !tenantId || !clientId || !secret) return;
 
-const subscriptions = async () => {
+if(process.env.production){
 
-  try {
+  // production
+  credentials = new DefaultAzureCredential();
 
-    const credentials = new DefaultAzureCredential();
-    const client = new SubscriptionClient(credentials);
+}else{
 
-    const list = await client.subscriptions.list(subscriptionId);
+  // development
+  credentials = new ClientSecretCredential(tenantId, clientId, secret);
+  console.log("development");
+}
 
-    for (const item of list) {
+// use credential to authenticate with Azure SDKs
+let client = new SubscriptionClient(credentials);
+
+const subscriptions = async() =>{
+
+  // get list of Azure subscriptions
+  const listOfSubscriptions = await client.subscriptions.list();
+  
+  // get details of each subscription
+  for (const item of listOfSubscriptions) {
+  
       const subscriptionDetails = await client.subscriptions.get(item.subscriptionId);
-
-    /*
   
-    Each item looks (something) like:
-  
-    {
-      id: '/subscriptions/123456',
-      subscriptionId: '123456',
-      displayName: 'YOUR-SUBSCRIPTION-NAME',
-      state: 'Enabled',
-      subscriptionPolicies: {
-        locationPlacementId: 'Internal_2014-09-01',
-        quotaId: 'Internal_2014-09-01',
-        spendingLimit: 'Off'
+      /*
+    
+      Each item looks like:
+    
+      {
+        id: '/subscriptions/123456',
+        subscriptionId: '123456',
+        displayName: 'YOUR-SUBSCRIPTION-NAME',
+        state: 'Enabled',
+        subscriptionPolicies: {
+          locationPlacementId: 'Internal_2014-09-01',
+          quotaId: 'Internal_2014-09-01',
+          spendingLimit: 'Off'
+        },
+        authorizationSource: 'RoleBased'
       },
-      authorizationSource: 'RoleBased'
-    },
+    
+      */
   
-    */
-
       console.log(subscriptionDetails)
-    }
-  } catch (err) {
-    console.log("An error occurred:");
-    console.error(err);
   }
 }
 
-subscriptions().then(() => console.log("done")).catch(err => { "error " + err })
+subscriptions()
+.then(()=>console.log("done"))
+.catch(ex=>console.log(ex))
 
 
