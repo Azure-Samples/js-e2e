@@ -1,4 +1,4 @@
-const { DefaultAzureCredential } = require("@azure/identity");
+const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
 const { MonitorManagementClient } = require("@azure/arm-monitor");
 const dayjs = require('dayjs');
 const { prettyPrint } = require('@base2/pretty-print-object');
@@ -17,14 +17,26 @@ let filter = `eventTimestamp ge '${greaterThanIsoTime}' and eventTimestamp le '$
 filter += (resourceGroupName) ? ` and resourceGroupName eq '${resourceGroupName}'` : null;
 
 // Azure authentication in environment variables for DefaultAzureCredential
-const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
-console.log(`tenant = ${process.env["AZURE_TENANT_ID"]}`);
-console.log(`client id = ${process.env["AZURE_CLIENT_ID"]}`);
-console.log(`client secret = ${process.env["AZURE_CLIENT_SECRET"]}`);
-console.log(`subscription id = ${subscriptionId}`);
+let credentials = null;
+const tenantId = process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID"; 
+const clientId = process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID"; 
+const secret = process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
+const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
 
-const creds = new DefaultAzureCredential();
-const client = new MonitorManagementClient(creds, subscriptionId);
+if(process.env.production){
+
+  // production
+  credentials = new DefaultAzureCredential();
+
+}else{
+
+  // development
+  credentials = new ClientSecretCredential(tenantId, clientId, secret);
+  console.log("development");
+}
+
+// use credential to authenticate with Azure SDKs
+const client = new MonitorManagementClient(credentials, subscriptionId);
 
 client.activityLogs.list(filter).then((result) => {
   let arrObjects = [];
