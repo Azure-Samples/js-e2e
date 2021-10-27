@@ -1,5 +1,5 @@
 const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
-const { ComputeManagementClient }  = require('@azure/arm-compute');
+const { ResourceManagementClient } = require("@azure/arm-resources");
 
 // Azure authentication in environment variables for DefaultAzureCredential
 let credentials = null;
@@ -24,8 +24,11 @@ if(process.env.production){
 
 const deleteResourceGroup = async () => {
 
-    const computeClient = new ComputeManagementClient(credentials, subscriptionId);
-    const result = await resourceManagement.resourceGroups.deleteMethod(resourceGroupName);
+    const resourceClient = new ResourceManagementClient(
+        credentials,
+        subscriptionId
+    );
+    const result = await resourceClient.resourceGroups.deleteMethod(resourceGroupName);
     console.log(JSON.stringify(result));
 }
 
