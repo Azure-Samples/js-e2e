@@ -42,7 +42,7 @@ const secret =
 const subscriptionId =
   process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
 
-let credentials = null;
+  let credentials = null;
 
 if (process.env.production) {
   // production
@@ -277,7 +277,7 @@ const osDiskName = _generateRandomId(`${yourAlias}osdisk`, randomIds);
 
 main()
   .then(() => {
-    console.log("success - resource group name: " + resourceGroupName);
+    console.log(`success - resource group name: ${resourceGroupName}, vm resource name: ${vmName}`);
   })
   .catch((err) => {
     console.log(err);

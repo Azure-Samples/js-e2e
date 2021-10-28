@@ -32,3 +32,63 @@ listVMs().then((result)=>{
 }).catch(ex => {
     console.log(ex);
 });
+
+
+    /*
+    Result is an array of items. Each item looks something like:
+
+    {
+      "id": "/subscriptions/123456/resourceGroups/johnsmith-TESTRG3215/providers/Microsoft.Compute/virtualMachines/johnsmithvm6859",
+      "name": "johnsmithvm6859",
+      "type": "Microsoft.Compute/virtualMachines",
+      "location": "eastus",
+      "hardwareProfile": { "vmSize": "Standard_B1ls" },
+      "storageProfile": {
+        "imageReference": {
+          "publisher": "Canonical",
+          "offer": "UbuntuServer",
+          "sku": "14.04.3-LTS",
+          "version": "14.04.201805220",
+          "exactVersion": "14.04.201805220"
+        },
+        "osDisk": {
+          "osType": "Linux",
+          "name": "johnsmithosdisk9293",
+          "vhd": {
+            "uri": "https://johnsmithac1195.blob.core.windows.net/nodejscontainer/osnodejslinux.vhd"
+          },
+          "caching": "None",
+          "createOption": "FromImage",
+          "diskSizeGB": 30,
+          "deleteOption": "Detach"
+        },
+        "dataDisks": []
+      },
+      "osProfile": {
+        "computerName": "johnsmithvm6859",
+        "adminUsername": "notadmin",
+        "linuxConfiguration": {
+          "disablePasswordAuthentication": false,
+          "provisionVMAgent": true,
+          "patchSettings": {
+            "patchMode": "ImageDefault",
+            "assessmentMode": "ImageDefault"
+          }
+        },
+        "secrets": [],
+        "allowExtensionOperations": true,
+        "requireGuestProvisionSignal": true
+      },
+      "networkProfile": {
+        "networkInterfaces": [
+          {
+            "id": "/subscriptions/123456/resourceGroups/johnsmith-testrg3215/providers/Microsoft.Network/networkInterfaces/johnsmithnic7962",
+            "primary": true
+          }
+        ]
+      },
+      "provisioningState": "Succeeded",
+      "vmId": "987654"
+    }
+
+    */

@@ -35,3 +35,16 @@ startVM().then((result)=>{
 }).catch(ex => {
     console.log(ex);
 });
+
+/*
+
+Start operation results:
+
+{
+  "startTime":"2021-10-27T16:35:59.6006484+00:00",
+  "endTime":"2021-10-27T16:35:59.850632+00:00",
+  "status":"Succeeded",
+  "name":"1773c5e7-d904-4f98-b2a6-6e2f2465407f"
+}
+
+*/
