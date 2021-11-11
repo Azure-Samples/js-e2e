@@ -1,0 +1,18 @@
+{
+  "name": "app-config",
+  "version": "1.0.0",
+  "description": "",
+  "main": "get-configuration-setting.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/app-configuration": "^1.3.0",
+    "@azure/identity": "^2.0.1",
+    "@azure/keyvault-secrets": "^4.3.0",
+    "dotenv": "^10.0.0"
+  }
+}
