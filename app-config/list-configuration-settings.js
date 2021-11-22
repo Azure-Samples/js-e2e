@@ -14,10 +14,9 @@ require("dotenv").config();
 
 const credential = new DefaultAzureCredential();
 const url = process.env["KEYVAULT_URI"] || "<keyvault-url>";
-console.log(url)
 const connectionString =
-  process.env["APPCONFIG_CONNECTION_STRING"] || "<connection string>";
-console.log(connectionString)
+process.env["APPCONFIG_CONNECTION_STRING"] || "<connection string>";
+
 const listSettings = async () => {
   const secretClient = new SecretClient(url, credential);
   const appConfigClient = new AppConfigurationClient(connectionString);
