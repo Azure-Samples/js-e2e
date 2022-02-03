@@ -1,11 +1,12 @@
 const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
 const { SubscriptionClient } = require("@azure/arm-subscriptions");
+require('dotenv').config();
 
 let credentials = null;
 
-const tenantId = process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID"; 
-const clientId = process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID"; 
-const secret = process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
+const tenantId = process.env["AZURE_TENANT_ID"]; 
+const clientId = process.env["AZURE_CLIENT_ID"]; 
+const secret = process.env["AZURE_CLIENT_SECRET"];
 
 if(process.env.NODE_ENV && process.env.NODE_ENV==='production'){
 
@@ -16,6 +17,7 @@ if(process.env.NODE_ENV && process.env.NODE_ENV==='production'){
 
   // development
   if(tenantId && clientId && secret){
+    console.log("development");
     credentials = new ClientSecretCredential(tenantId, clientId, secret);
   } else {
     credentials = new DefaultAzureCredential();
