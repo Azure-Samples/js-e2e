@@ -20,15 +20,16 @@ References:
 
 */
 
+const { InteractiveBrowserCredential } = require("@azure/identity");
+const { ResourceManagementClient } = require("@azure/arm-resources");
 
-const msRestNodeAuth = require("@azure/ms-rest-nodeauth");
-const { ResourceManagementClientContext, Resources } = require("@azure/arm-resources");
+async function main(){
 
-const createAzureFaceResource = async (credentials) => {
-
-  // Use Azure SDK
-  const resourceManagementClientContext = new ResourceManagementClientContext(credentials, subscriptionId);
-  const resources = new Resources(resourceManagementClientContext);
+  // Use Azure Identity Default Credential
+  const credentials = new InteractiveBrowserCredential();
+  
+  // Use Azure SDK for Resource Management
+  const client = new ResourceManagementClient(credential, subscriptionId);
 
   // REPLACE WITH YOUR VALUES
   const subscriptionId = "REPLACE-WITH-YOUR-SUBSCRIPTION-ID";
@@ -61,22 +62,15 @@ const createAzureFaceResource = async (credentials) => {
       publicNetworkAccess: "Enabled"
     }
   }
-  
+
   // Use Date as part of the resource name convention
   const date = new Date();
   const createdDate = date.toJSON().slice(0, 10)
 
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-
-  longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
-
+  const longRunningOperationResult = await client.resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
   console.log(longRunningOperationResult)
-
 }
 
-msRestNodeAuth.interactiveLogin().then(async (credentials) => {
-  await createAzureFaceResource(credentials)
-}).catch((err) => {
-  console.error(err);
-});
+main();

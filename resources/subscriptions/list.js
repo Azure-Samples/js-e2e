@@ -24,21 +24,16 @@ if(process.env.NODE_ENV && process.env.NODE_ENV==='production'){
   }
 }
 
-// use credential to authenticate with Azure SDKs
-let client = new SubscriptionClient(credentials);
+async function main(){
+  // use credential to authenticate with Azure SDKs
+  const client = new SubscriptionClient(credentials);
 
-const subscriptions = async() =>{
-
-  // get list of Azure subscriptions
-  const listOfSubscriptions = await client.subscriptions.list();
-  
   // get details of each subscription
-  for (const item of listOfSubscriptions) {
-  
-      const subscriptionDetails = await client.subscriptions.get(item.subscriptionId);
-  
-      /*
-    
+  for await (const item of client.subscriptions.list()){
+    const subscriptionDetails = await client.subscriptions.get(item.subscriptionId);
+    console.log(subscriptionDetails)
+  }
+  /* 
       Each item looks like:
     
       {
@@ -53,15 +48,9 @@ const subscriptions = async() =>{
         },
         authorizationSource: 'RoleBased'
       },
-    
-      */
-  
-      console.log(subscriptionDetails)
-  }
+  */
 }
 
-subscriptions()
-.then(()=>console.log("done"))
-.catch(ex=>console.log(ex))
+main();
 
 

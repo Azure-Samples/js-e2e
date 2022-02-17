@@ -23,18 +23,13 @@ if(process.env.production){
   console.log("development");
 }
 
-const getVmInfo = async () => {
-
-    const computeClient = new ComputeManagementClient(credentials, subscriptionId);
-    const result = await computeClient.virtualMachines.get(resourceGroupName, vmResourceName);
-    console.log(JSON.stringify(result));
+async function main(){
+  const computeClient = new ComputeManagementClient(credentials, subscriptionId);
+  const result = await computeClient.virtualMachines.get(resourceGroupName, vmResourceName);
+  console.log(JSON.stringify(result));
 }
 
-getVmInfo().then((result)=>{
-    console.log(result);
-}).catch(ex => {
-    console.log(ex);
-});
+main();
 
 /*
 {

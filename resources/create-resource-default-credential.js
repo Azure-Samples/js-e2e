@@ -36,64 +36,51 @@ const emailAlias = process.env["EMAIL-ALIAS"];
 const appName = process.env["APP-NAME"];
 
 const { DefaultAzureCredential } = require("@azure/identity");
-const { ResourceManagementClientContext, Resources } = require("@azure/arm-resources");
+const { ResourceManagementClient } = require("@azure/arm-resources");
 
-const createAzureFaceResource = async (credentials) => {
+async function main(){
 
-  try {
-    // Use Azure Identity Default Credential
-    const credentials = new DefaultAzureCredential();
+  // Use Azure Identity Default Credential
+  const credentials = new DefaultAzureCredential();
   
-    // Use Azure SDK for Resource Management
-    const resourceManagementClientContext = new ResourceManagementClientContext(credentials, subscriptionId);
-    const resources = new Resources(resourceManagementClientContext);
+  // Use Azure SDK for Resource Management
+  const client = new ResourceManagementClient(credentials, subscriptionId);
 
-    // These are specific to the Azure Cognitive Services Face API
-    const resourceProviderNamespace = "Microsoft.CognitiveServices";
-    const parentResourcePath = "";
-    const apiVersion = "2017-04-18";
+  // These are specific to the Azure Cognitive Services Face API
+  const resourceProviderNamespace = "Microsoft.CognitiveServices";
+  const parentResourcePath = "";
+  const apiVersion = "2017-04-18";
 
-    let parameters = {
-      type: "Microsoft.CognitiveServices/accounts",
-      location: "eastus",
-      tags: {
-        alias: emailAlias,
-        app: appName
+  let parameters = {
+    type: "Microsoft.CognitiveServices/accounts",
+    location: "eastus",
+    tags: {
+      alias: emailAlias,
+      app: appName
+    },
+    sku: {
+      name: "F0"
+    },
+    kind: "Face",
+    properties: {
+      networkAcls: {
+        defaultAction: "Allow",
+        virtualNetworkRules: [],
+        ipRules: []
       },
-      sku: {
-        name: "F0"
-      },
-      kind: "Face",
-      properties: {
-        networkAcls: {
-          defaultAction: "Allow",
-          virtualNetworkRules: [],
-          ipRules: []
-        },
-        privateEndpointConnections: [],
-        publicNetworkAccess: "Enabled"
-      }
+      privateEndpointConnections: [],
+      publicNetworkAccess: "Enabled"
     }
-  
-    // Use Date as part of the resource name convention
-    const date = new Date();
-    const createdDate = date.toJSON().slice(0, 10)
-
-    const resourceType = "accounts";
-    const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-
-    longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
-
-    console.log(longRunningOperationResult)
-    
-  } catch (err) {
-    console.log(err);
   }
 
+  // Use Date as part of the resource name convention
+  const date = new Date();
+  const createdDate = date.toJSON().slice(0, 10)
+
+  const resourceType = "accounts";
+  const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
+  const longRunningOperationResult = await client.resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+  console.log(longRunningOperationResult)
 }
 
-createAzureFaceResource().then(() => {
-  console.log("done");
-}).catch((err) => {
-  console.error(err);
-});
+main();

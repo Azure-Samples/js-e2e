@@ -1,5 +1,5 @@
-const msRestNodeAuth = require("@azure/ms-rest-nodeauth");
-const { WebSiteManagementClient, We } = require("@azure/arm-appservice");
+const { InteractiveBrowserCredential } = require("@azure/identity");
+const { WebSiteManagementClient } = require("@azure/arm-appservice");
 
 // CHANGE THESE VALUES TO YOUR OWN
 // Either set environment variables 
@@ -8,14 +8,14 @@ const subscriptionId = process.env["MY-SUBSCRIPTION"] || "";
 const resourceGroupName = process.env["MY-RESOURCE-GROUP"] || "";
 const resourceName = process.env["MY-RESOURCE-NAME"] || "";
 
-const getSettings = async (creds) => {
-    const client = new WebSiteManagementClient(creds, subscriptionId);
-    const settingsList = await client.webApps.listApplicationSettings(resourceGroupName, resourceName);
-    console.log(JSON.stringify(settingsList));
+async function main(){
+  const credential = new InteractiveBrowserCredential(); 
+  const client = new WebSiteManagementClient(credential, subscriptionId);
+  const ApplicationSettingsList = new Array();
+  for await (const item of client.webApps.listApplicationSettings(resourceGroupName, resourceName)){
+    ApplicationSettingsList.push(item);
+  }
+  console.log(JSON.stringify(ApplicationSettingsList));
 }
-msRestNodeAuth.interactiveLogin().then((creds) => {
-    return getSettings(creds);
-}).catch((err) => {
-  console.error(err);
-});
 
+main();

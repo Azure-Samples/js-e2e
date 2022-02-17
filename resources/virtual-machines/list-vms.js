@@ -20,21 +20,18 @@ if(process.env.production){
   console.log("development");
 }
 
-const listVMs = async () => {
+async function main(){
+  // use credential to authenticate with Azure SDKs
+  const client = new ComputeManagementClient(credentials,subscriptionId);
 
-    const computeClient = new ComputeManagementClient(credentials, subscriptionId);
-    const result = await computeClient.virtualMachines.listAll();
-    console.log(JSON.stringify(result));
-}
+  // get details of each subscription
+  const listResult = new Array();
+  for await (const item of client.virtualMachines.listAll()){
+    listResult.push(item);
+  }
+  console.log(JSON.stringify(listResult));
 
-listVMs().then((result)=>{
-    console.log(result);
-}).catch(ex => {
-    console.log(ex);
-});
-
-
-    /*
+  /*
     Result is an array of items. Each item looks something like:
 
     {
@@ -92,3 +89,6 @@ listVMs().then((result)=>{
     }
 
     */
+}
+
+main();

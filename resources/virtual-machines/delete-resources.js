@@ -22,18 +22,12 @@ if(process.env.production){
   console.log("development");
 }
 
-const deleteResourceGroup = async () => {
+async function main(){
+  // Create Azure SDK client for Resource Management such as resource groups
+  const client = new ResourceManagementClient(credentials, subscriptionId);
 
-    const resourceClient = new ResourceManagementClient(
-        credentials,
-        subscriptionId
-    );
-    const result = await resourceClient.resourceGroups.deleteMethod(resourceGroupName);
-    console.log(JSON.stringify(result));
+  const result = await client.resourceGroups.deleteMethod(resourceGroupName);
+  console.log(JSON.stringify(result));
 }
 
-deleteResourceGroup().then((result)=>{
-    console.log(result);
-}).catch(ex => {
-    console.log(ex);
-});
+main();

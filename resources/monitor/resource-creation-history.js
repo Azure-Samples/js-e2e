@@ -1,7 +1,6 @@
 const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
 const { MonitorManagementClient } = require("@azure/arm-monitor");
 const dayjs = require('dayjs');
-const { prettyPrint } = require('@base2/pretty-print-object');
 
 // resource group - returns all resource groups if not specified
 const resourceGroupName = "";
@@ -35,14 +34,14 @@ if(process.env.production){
   console.log("development");
 }
 
-// use credential to authenticate with Azure SDKs
-const client = new MonitorManagementClient(credentials, subscriptionId);
+//list
+async function main(){
+  // use credential to authenticate with Azure SDKs
+  const client = new MonitorManagementClient(credentials, subscriptionId);
 
-client.activityLogs.list(filter).then((result) => {
-  let arrObjects = [];
-
-  result.forEach(element => {
-    arrObjects.push({
+  const listResult = new Array();
+  for await (const element of client.activityLogs.list(filter)){
+    listResult.push({
       "resourceGroupName": element?.resourceGroupName,
       "action": element?.authorization?.action,
       "user" : element?.claims?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
@@ -51,13 +50,12 @@ client.activityLogs.list(filter).then((result) => {
       "operationName": element.operationName,
       "status": element.status,
       "eventTimestamp": element.eventTimestamp
-  })});
+    })
+  }
+  console.log(JSON.stringify(ListResult));
+}
 
-  console.log(prettyPrint(arrObjects));
-}).catch((err) => {
-  console.log("An error occurred:");
-  console.log(err);
-});
+main();
 /*
 
 Example element:

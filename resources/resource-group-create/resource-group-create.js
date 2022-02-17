@@ -20,25 +20,22 @@ if (!secret) throw Error("AZURE_CLIENT_SECRET is missing from environment variab
 const credentials = new DefaultAzureCredential();
 
 // Create Azure SDK client for Resource Management such as resource groups
-const resourceManagement = new ResourceManagementClient(credentials, subscriptionId);
+const client = new ResourceManagementClient(credentials, subscriptionId);
 
-const ownerAlias = "jsmith";
-const location = "westus";
+async function main(){
+    const ownerAlias = "jsmith";
+    const location = "westus";
 
-// Resource group definition
-const resourceGroupName = `${ownerAlias}-ResourceGroup`;
-const resourceGroupParameters = {
-    location: location,
-    tags: { createdBy: ownerAlias },
-  };
+    // Resource group definition
+    const resourceGroupName = `${ownerAlias}-ResourceGroup`;
+    const resourceGroupParameters = {
+        location: location,
+        tags: { createdBy: ownerAlias },
+    };
 
-// List resource groups in subscription
-resourceManagement.resourceGroups.createOrUpdate(
-    resourceGroupName,
-    resourceGroupParameters
-).then(result=>{
-
-    console.log(result);
+    // Create resource groups in subscription
+    const createResult = await client.resourceGroups.createOrUpdate(resourceGroupName,resourceGroupParameters);
+    console.log(createResult)
 
     /*
     {
@@ -50,5 +47,6 @@ resourceManagement.resourceGroups.createOrUpdate(
     tags: { createdBy: 'jsmith' }
     } 
     */
-
-}).catch(err=>{console.log(err)});
+}
+  
+main();
