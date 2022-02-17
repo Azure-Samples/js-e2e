@@ -30,7 +30,7 @@ const resourceGroupLocation = "eastus";
 const resourceGroupFilter = `tagName eq 'owner' and tagValue eq '${myEmailAlias}'`;
 const resourceGroupTop = 10;
 
-async function main(){
+async function resourceGroupActions(){
     const credential = new InteractiveBrowserCredential(); 
     const client = new ResourceManagementClient(credential, subscriptionId);
 
@@ -77,4 +77,6 @@ async function main(){
     console.log(JSON.stringify(deleteResult));
   }
   
-  main();
+  resourceGroupActions().catch(err => {
+    console.log(err);
+  });

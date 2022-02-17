@@ -7,7 +7,7 @@ const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 const creds = new DefaultAzureCredential();
 const client = new AuthorizationManagementClient(creds, subscriptionId);
 
-async function main(){
+async function listOfSubscriptions(){
   const ListResult = new Array();
   for await (const item of client.classicAdministrators.list()){
     ListResult.push(item);
@@ -15,4 +15,6 @@ async function main(){
   console.log(JSON.stringify(ListResult));
 }
 
-main();
+listOfSubscriptions().catch(err => {
+  console.log(err);
+});

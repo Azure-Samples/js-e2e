@@ -23,13 +23,15 @@ if(process.env.production){
   console.log("development");
 }
 
-async function main(){
+async function stopVM(){
   const computeClient = new ComputeManagementClient(credentials, subscriptionId);
   const result = await computeClient.virtualMachines.powerOff(resourceGroupName, vmResourceName);
   console.log(JSON.stringify(result));
 }
 
-main();
+stopVM().catch(err => {
+  console.log(err);
+});
 /*
 
 Stop operation results:

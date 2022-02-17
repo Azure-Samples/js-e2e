@@ -23,7 +23,7 @@ References:
 const { InteractiveBrowserCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
-async function main(){
+async function createAzureFaceResource(){
 
   // Use Azure Identity Default Credential
   const credentials = new InteractiveBrowserCredential();
@@ -73,4 +73,6 @@ async function main(){
   console.log(longRunningOperationResult)
 }
 
-main();
+createAzureFaceResource().catch(err => {
+  console.log(err);
+});

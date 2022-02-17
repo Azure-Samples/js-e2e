@@ -8,7 +8,7 @@ const subscriptionId = process.env["MY-SUBSCRIPTION"] || "";
 const resourceGroupName = process.env["MY-RESOURCE-GROUP"] || "";
 const resourceName = process.env["MY-RESOURCE-NAME"] || "";
 
-async function main(){
+async function getSettings(){
   const credential = new InteractiveBrowserCredential(); 
   const client = new WebSiteManagementClient(credential, subscriptionId);
   const ApplicationSettingsList = new Array();
@@ -18,4 +18,6 @@ async function main(){
   console.log(JSON.stringify(ApplicationSettingsList));
 }
 
-main();
+getSettings().catch(err => {
+  console.log(err);
+});

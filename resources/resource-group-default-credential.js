@@ -24,7 +24,7 @@ const myAppName = process.env["APP-NAME"];
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
-async function main(){
+async function createResourceGroup(){
 
     const resourceCreatedDate = new Date().toISOString();
     const resourceGroupName = `${myAppName}-resource-group`;
@@ -54,4 +54,6 @@ async function main(){
     console.log(JSON.stringify(checkExistenceResult));
 }
 
-main();
+createResourceGroup().catch(err => {
+    console.log(err);
+});

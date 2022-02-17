@@ -83,4 +83,6 @@ async function main(){
   console.log(longRunningOperationResult)
 }
 
-main();
+main().catch(err => {
+  console.log(err);
+});

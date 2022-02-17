@@ -23,13 +23,15 @@ if(process.env.production){
   console.log("development");
 }
 
-async function main(){
+async function startVM(){
   const computeClient = new ComputeManagementClient(credentials, subscriptionId);
   const result = await computeClient.virtualMachines.start(resourceGroupName, vmResourceName);
   console.log(JSON.stringify(result));
 }
 
-main();
+startVM().catch(err => {
+  console.log(err);
+});
 
 /*
 

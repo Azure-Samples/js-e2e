@@ -55,7 +55,9 @@ async function main(){
   console.log(JSON.stringify(ListResult));
 }
 
-main();
+main().catch(err => {
+  console.log(err);
+});
 /*
 
 Example element:
