@@ -23,7 +23,7 @@ if (process.env.production) {
   credentials = new ClientSecretCredential(tenantId, clientId, secret);
 }
 
-async function main(){
+async function listVMsStatus(){
   // Set params to only ask for status
   const virtualMachinesListAllOptionalParams = {statusOnly: "true",};
 
@@ -50,7 +50,9 @@ async function main(){
    */
 }
 
-main();
+listVMsStatus().catch(err => {
+  console.log(err);
+});
 
 /*
     Result is an array of VMs with only status. Each item looks something like:

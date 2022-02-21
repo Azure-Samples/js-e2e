@@ -20,7 +20,7 @@ if(process.env.production){
   console.log("development");
 }
 
-async function main(){
+async function listVMs(){
   // use credential to authenticate with Azure SDKs
   const client = new ComputeManagementClient(credentials,subscriptionId);
 
@@ -91,6 +91,6 @@ async function main(){
     */
 }
 
-main().catch(err => {
+listVMs().catch(err => {
   console.log(err);
 });

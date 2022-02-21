@@ -38,7 +38,7 @@ const appName = process.env["APP-NAME"];
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
-async function main(){
+async function createAzureFaceResource(){
 
   // Use Azure Identity Default Credential
   const credentials = new DefaultAzureCredential();
@@ -83,6 +83,6 @@ async function main(){
   console.log(longRunningOperationResult)
 }
 
-main().catch(err => {
+createAzureFaceResource().catch(err => {
   console.log(err);
 });

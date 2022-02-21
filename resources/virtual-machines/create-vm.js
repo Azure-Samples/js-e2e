@@ -7,7 +7,6 @@ const { ComputeManagementClient } = require("@azure/arm-compute");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 const { StorageManagementClient } = require("@azure/arm-storage");
 const { NetworkManagementClient } = require("@azure/arm-network");
-const { off } = require("process");
 
 // Store function output to be used elsewhere
 let randomIds = {};
