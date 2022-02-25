@@ -22,7 +22,7 @@ const credentials = new DefaultAzureCredential();
 // Create Azure SDK client for Resource Management such as resource groups
 const client = new ResourceManagementClient(credentials, subscriptionId);
 
-async function main(){
+try{
     const ownerAlias = "jsmith";
     const location = "westus";
 
@@ -47,8 +47,7 @@ async function main(){
     tags: { createdBy: 'jsmith' }
     } 
     */
+}catch(error){
+    console.error(JSON.stringify(err));
 }
-  
-main().catch(err => {
-    console.log(err);
-  });
+    

@@ -34,8 +34,7 @@ if(process.env.production){
   console.log("development");
 }
 
-//list
-async function main(){
+try {
   // use credential to authenticate with Azure SDKs
   const client = new MonitorManagementClient(credentials, subscriptionId);
 
@@ -53,11 +52,10 @@ async function main(){
     })
   }
   console.log(JSON.stringify(ListResult));
+}catch(error) {
+  console.error(JSON.stringify(err));
 }
 
-main().catch(err => {
-  console.log(err);
-});
 /*
 
 Example element:

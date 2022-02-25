@@ -19,7 +19,7 @@ if (!secret) throw Error("AZURE_CLIENT_SECRET is missing from environment variab
 // Create Azure authentication credentials
 const credentials = new DefaultAzureCredential();
 
-async function main(){
+try {
   // Create Azure SDK client for Resource Management such as resource groups
   const client = new ResourceManagementClient(credentials, subscriptionId);
 
@@ -29,8 +29,6 @@ async function main(){
       listResult.push(item);
   }
   console.log(JSON.stringify(ListResult));
+} catch(error) {
+  console.error(JSON.stringify(err));
 }
-
-main().catch(err => {
-  console.log(err);
-});

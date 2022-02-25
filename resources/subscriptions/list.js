@@ -24,7 +24,7 @@ if(process.env.NODE_ENV && process.env.NODE_ENV==='production'){
   }
 }
 
-async function main(){
+try {
   // use credential to authenticate with Azure SDKs
   const client = new SubscriptionClient(credentials);
 
@@ -49,10 +49,8 @@ async function main(){
         authorizationSource: 'RoleBased'
       },
   */
+} catch(error) {
+  console.error(JSON.stringify(err));
 }
-
-main().catch(err => {
-  console.log(err);
-});
 
 
