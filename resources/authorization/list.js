@@ -12,9 +12,11 @@ async function listOfSubscriptions(){
   for await (const item of client.classicAdministrators.list()){
     ListResult.push(item);
   }
-  console.log(JSON.stringify(ListResult));
+  return ListResult;
 }
 
-listOfSubscriptions().catch(err => {
+listOfSubscriptions().then(res => {
+  console.log(JSON.stringify(res));
+}).catch(err=> {
   console.log(err);
-});
+})

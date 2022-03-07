@@ -29,7 +29,7 @@ async function listVMs(){
   for await (const item of client.virtualMachines.listAll()){
     listResult.push(item);
   }
-  console.log(JSON.stringify(listResult));
+  return listResult;
 
   /*
     Result is an array of items. Each item looks something like:
@@ -91,6 +91,8 @@ async function listVMs(){
     */
 }
 
-listVMs().catch(err => {
+listVMs().then(res => {
+  console.log(JSON.stringify(res));
+}).catch(err=> {
   console.log(err);
-});
+})

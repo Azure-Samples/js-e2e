@@ -30,6 +30,8 @@ async function deleteResourceGroup(){
   console.log(JSON.stringify(result));
 }
 
-deleteResourceGroup().catch(err => {
+deleteResourceGroup().then(res => {
+  console.log(JSON.stringify(res));
+}).catch(err=> {
   console.log(err);
-});
+})

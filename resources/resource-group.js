@@ -69,7 +69,7 @@ async function resourceGroupActions(){
     for await (const item of client.resourceGroups.listAll()){
         allListResult.push(item);
     }
-    console.log(JSON.stringify(allListResult));
+    return allListResult;
     
     // Delete - HTTP status 200 on success, no body
     console.log("Deleting...");
@@ -77,6 +77,8 @@ async function resourceGroupActions(){
     console.log(JSON.stringify(deleteResult));
   }
   
-  resourceGroupActions().catch(err => {
+createResourceGroup().then(res => {
+    console.log(JSON.stringify(res));
+}).catch(err=> {
     console.log(err);
-  });
+})

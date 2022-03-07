@@ -8,16 +8,17 @@ const subscriptionId = process.env["MY-SUBSCRIPTION"] || "";
 const resourceGroupName = process.env["MY-RESOURCE-GROUP"] || "";
 const resourceName = process.env["MY-RESOURCE-NAME"] || "";
 
-async function getCertificates(){
-  const credential = new InteractiveBrowserCredential(); 
+async function getCertificates(credential){
   const client = new WebSiteManagementClient(credential, subscriptionId);
   const certificateOrdersList = new Array();
   for await (const item of client.appServiceCertificateOrders.list()){
     certificateOrdersList.push(item);
   }
-  console.log(JSON.stringify(certificateOrdersList));
+  return certificateOrdersList;
 }
 
-getCertificates().catch(err => {
+getCertificates().then(res => {
+  console.log(JSON.stringify(res));
+}).catch(err=> {
   console.log(err);
-});
+})

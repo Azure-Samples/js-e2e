@@ -26,12 +26,14 @@ if(process.env.production){
 async function startVM(){
   const computeClient = new ComputeManagementClient(credentials, subscriptionId);
   const result = await computeClient.virtualMachines.start(resourceGroupName, vmResourceName);
-  console.log(JSON.stringify(result));
+  return result;
 }
 
-startVM().catch(err => {
+startVM().then(res => {
+  console.log(JSON.stringify(res));
+}).catch(err=> {
   console.log(err);
-});
+})
 
 /*
 

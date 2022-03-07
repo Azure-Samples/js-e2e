@@ -70,9 +70,11 @@ async function createAzureFaceResource(){
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
   const longRunningOperationResult = await client.resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
-  console.log(longRunningOperationResult)
+  return longRunningOperationResult;
 }
 
-createAzureFaceResource().catch(err => {
+createAzureFaceResource().then(res => {
+  console.log(JSON.stringify(res));
+}).catch(err=> {
   console.log(err);
-});
+})

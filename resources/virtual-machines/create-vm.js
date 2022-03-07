@@ -249,6 +249,8 @@ async function main(){
   console.log(`success - resource group name: ${resourceGroupName}, vm resource name: ${vmName}`);
 }
 
-main().catch(err => {
+main().then(res => {
+  console.log(res)
+}).catch(err => {
   console.log(err);
-});
+})
