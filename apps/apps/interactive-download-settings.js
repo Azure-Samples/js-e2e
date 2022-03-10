@@ -17,8 +17,8 @@ async function getSettings(credential){
   return ApplicationSettingsList;
 }
 
-getSettings().then(res => {
-  console.log(JSON.stringify(res));
-}).catch(err=> {
-  console.log(err);
-})
+getSettings().then((creds) => {
+  return getSettings(creds);
+}).catch((err) => {
+  console.error(err);
+});

@@ -15,8 +15,10 @@ async function listOfSubscriptions(){
   return ListResult;
 }
 
-listOfSubscriptions().then(res => {
-  console.log(JSON.stringify(res));
-}).catch(err=> {
-  console.log(err);
-})
+listOfSubscriptions().then((result) => {
+  console.log("The result is:");
+  console.log(result);
+}).catch((err) => {
+  console.log("An error occurred:");
+  console.error(err);
+});

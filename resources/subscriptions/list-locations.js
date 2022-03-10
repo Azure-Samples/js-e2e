@@ -28,7 +28,8 @@ try {
   }
   console.log(JSON.stringify(ListResult));
 } catch(error) {
-  console.error(JSON.stringify(err));
+  console.log("An error occurred:");
+  console.error(err);
 }
 
 

@@ -54,8 +54,8 @@ async function createResourceGroup(){
     return checkExistenceResult
 }
 
-createResourceGroup().then(res => {
-    console.log(JSON.stringify(res));
-}).catch(err=> {
+createResourceGroup().then(() => {
+    console.log("done");
+}).catch(err => {
     console.log(err);
-})
+});
