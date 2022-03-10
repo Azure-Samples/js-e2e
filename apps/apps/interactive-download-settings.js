@@ -8,8 +8,10 @@ const subscriptionId = process.env["MY-SUBSCRIPTION"] || "";
 const resourceGroupName = process.env["MY-RESOURCE-GROUP"] || "";
 const resourceName = process.env["MY-RESOURCE-NAME"] || "";
 
-async function getSettings(credential){ 
-  const client = new WebSiteManagementClient(credential, subscriptionId);
+const creds = new InteractiveBrowserCredential();
+
+async function getSettings(creds){ 
+  const client = new WebSiteManagementClient(creds, subscriptionId);
   const ApplicationSettingsList = new Array();
   for await (const item of client.webApps.listApplicationSettings(resourceGroupName, resourceName)){
     ApplicationSettingsList.push(item);
@@ -17,8 +19,8 @@ async function getSettings(credential){
   return ApplicationSettingsList;
 }
 
-getSettings().then((creds) => {
-  return getSettings(creds);
-}).catch((err) => {
-  console.error(err);
-});
+getSettings(creds).then(result => {
+  console.log(JSON.stringify(result));
+}).catch(err=> {
+  console.log(err);
+})

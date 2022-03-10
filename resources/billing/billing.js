@@ -13,8 +13,10 @@ try{
   for await (const item of client.billingAccounts.list(expand)){
     ListResult.push(item);
   }
-  console.log(JSON.stringify(ListResult));
+  console.log("The result is:");
+  console.log(JSON.stringify(result));
 }catch(error) {
+  console.log("An error occurred:");
   console.error(JSON.stringify(err));
 }
 

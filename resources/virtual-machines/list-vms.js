@@ -91,8 +91,8 @@ async function listVMs(){
     */
 }
 
-listVMs().then(res => {
-  console.log(JSON.stringify(res));
+listVMs().then(result => {
+  console.log(result);
 }).catch(err=> {
   console.log(err);
 })

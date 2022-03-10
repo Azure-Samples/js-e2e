@@ -29,8 +29,8 @@ async function startVM(){
   return result;
 }
 
-startVM().then(res => {
-  console.log(JSON.stringify(res));
+startVM().then(result => {
+  console.log(result);
 }).catch(err=> {
   console.log(err);
 })
