@@ -29,30 +29,34 @@ async function listVMsStatus(){
 
   const computeClient = new ComputeManagementClient(credentials,subscriptionId);
 
+  const result = new Array();
   for await (const item of computeClient.virtualMachines.listAll(virtualMachinesListAllOptionalParams)){
-    console.log(item.name);
-    item.instanceView.statuses.array.forEach(element => {
-      if(element.time){
-        console.log(element.time);
-        console.log(element.displayStatus);
-      }else{
-        console.log(element.time);
-      }
-    });
+    result.push(item);
   }
-   /*
-          Example: 
+  result.map((vm) => {
+    console.log(`${vm.name}`);
+    vm.instanceView.statuses.map((status) => {
 
-            johnsmithvm6859
-            ---Provisioning succeeded Thu Oct 28 2021 10:41:03 GMT-0700 (Pacific Daylight Time)
-            ---VM running
+      console.log(`---${status.displayStatus} ${(status.time) ? status.time : ""}`
 
-   */
+        /*
+        Example: 
+          johnsmithvm6859
+          ---Provisioning succeeded Thu Oct 28 2021 10:41:03 GMT-0700 (Pacific Daylight Time)
+          ---VM running
+        */
+      );
+    });
+  });
 }
 
-listVMsStatus().catch(err => {
-  console.log(err);
-});
+listVMsStatus()
+    .then((result) => {
+      console.log("done");
+    })
+    .catch((ex) => {
+      console.log(ex);
+    });
 
 /*
     Result is an array of VMs with only status. Each item looks something like:

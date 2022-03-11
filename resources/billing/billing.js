@@ -8,10 +8,10 @@ const creds = new DefaultAzureCredential();
 // Please note that you can also use credentials from the `@azure/ms-rest-nodeauth` package instead.
 try{
   const client = new BillingManagementClient(creds, subscriptionId);
-  const ListResult = new Array();
+  const result = new Array();
   const expand = "testexpand";
   for await (const item of client.billingAccounts.list(expand)){
-    ListResult.push(item);
+    result.push(item);
   }
   console.log("The result is:");
   console.log(JSON.stringify(result));

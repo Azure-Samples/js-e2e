@@ -38,13 +38,14 @@ const appName = process.env["APP-NAME"];
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
-async function createAzureFaceResource(){
+// Use Azure Identity Default Credential
+const credentials = new DefaultAzureCredential();
 
-  // Use Azure Identity Default Credential
-  const credentials = new DefaultAzureCredential();
-  
+async function createAzureFaceResource(credentials){
+
   // Use Azure SDK for Resource Management
-  const client = new ResourceManagementClient(credentials, subscriptionId);
+  const resourceManagementClientContext = new ResourceManagementClient(credentials, subscriptionId);
+  const resources = resourceManagementClientContext.resources;
 
   // These are specific to the Azure Cognitive Services Face API
   const resourceProviderNamespace = "Microsoft.CognitiveServices";
@@ -79,12 +80,13 @@ async function createAzureFaceResource(){
 
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-  const longRunningOperationResult = await client.resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+  const longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+  console.log(longRunningOperationResult)
   return longRunningOperationResult;
 }
 
-createAzureFaceResource().then(res => {
-  console.log(JSON.stringify(res));
-}).catch(err=> {
-  console.log(err);
-})
+createAzureFaceResource().then(() => {
+  console.log("done");
+}).catch((err) => {
+  console.error(err);
+});

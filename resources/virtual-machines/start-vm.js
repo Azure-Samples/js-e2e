@@ -30,7 +30,7 @@ async function startVM(){
 }
 
 startVM().then(result => {
-  console.log(result);
+  console.log(JSON.stringify(result));
 }).catch(err=> {
   console.log(err);
 })

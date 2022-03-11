@@ -58,6 +58,24 @@ const computeClient = new ComputeManagementClient(credentials, subscriptionId);
 const storageClient = new StorageManagementClient(credentials, subscriptionId);
 const networkClient = new NetworkManagementClient(credentials, subscriptionId);
 
+// Create resources then manage them (on/off)
+async function createResources(){
+  try {
+    result = await createResourceGroup();
+    accountInfo = await createStorageAccount();
+    vnetInfo = await createVnet();
+    subnetInfo = await getSubnetInfo();
+    publicIPInfo = await createPublicIP();
+    nicInfo = await createNIC(subnetInfo, publicIPInfo);
+    vmImageInfo = await findVMImage();
+    nicResult = await getNICInfo();
+    vmInfo = await createVirtualMachine(nicInfo.id, vmImageInfo[0].name);
+    return;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 async function createResourceGroup(){
   console.log("\n1.Creating resource group: " + resourceGroupName);
   const groupParameters = {
@@ -204,10 +222,15 @@ async function createVirtualMachine(){
   };
   const resCreate = await computeClient.virtualMachines.beginCreateOrUpdateAndWait(resourceGroupName,vmName,vmParameters);
   const getCreate = await computeClient.virtualMachines.get(resourceGroupName,vmName)
+
+  console.log("6.Creating Virtual Machine: " + vmName);
+  console.log(
+    " VM create parameters: " + util.inspect(vmParameters, { depth: null })
+  );
   return getCreate;
 }
 
-async function _generateRandomId(prefix, existIds){
+const _generateRandomId = (prefix, existIds) => {
   var newNumber;
   while (true) {
     newNumber = prefix + Math.floor(Math.random() * 10000);
@@ -216,19 +239,6 @@ async function _generateRandomId(prefix, existIds){
     }
   }
   return newNumber;
-}
-
-// Create resources then manage them (on/off)
-async function createResources(){
-    result = await createResourceGroup();
-    accountInfo = await createStorageAccount();
-    vnetInfo = await createVnet();
-    subnetInfo = await getSubnetInfo();
-    publicIPInfo = await createPublicIP();
-    nicInfo = await createNIC(subnetInfo, publicIPInfo);
-    vmImageInfo = await findVMImage();
-    nicResult = await getNICInfo();
-    vmInfo = await createVirtualMachine(nicInfo.id, vmImageInfo[0].name);
 }
 
 //Random number generator for service names and settings
@@ -249,8 +259,10 @@ async function main(){
   console.log(`success - resource group name: ${resourceGroupName}, vm resource name: ${vmName}`);
 }
 
-main().then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err);
-})
+main()
+  .then(() => {
+    console.log(`success - resource group name: ${resourceGroupName}, vm resource name: ${vmName}`);
+  })
+  .catch((err) => {
+    console.log(err);
+});

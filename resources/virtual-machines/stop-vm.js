@@ -29,8 +29,8 @@ async function stopVM(){
   return result;
 }
 
-stopVM().then(res => {
-  console.log(res);
+stopVM().then(result => {
+  console.log(JSON.stringify(result));
 }).catch(err=> {
   console.log(err);
 })

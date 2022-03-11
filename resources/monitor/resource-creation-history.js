@@ -1,6 +1,7 @@
 const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
 const { MonitorManagementClient } = require("@azure/arm-monitor");
 const dayjs = require('dayjs');
+const { prettyPrint } = require('@base2/pretty-print-object');
 
 // resource group - returns all resource groups if not specified
 const resourceGroupName = "";
@@ -38,9 +39,9 @@ try {
   // use credential to authenticate with Azure SDKs
   const client = new MonitorManagementClient(credentials, subscriptionId);
 
-  const listResult = new Array();
+  const arrObjects = new Array();
   for await (const element of client.activityLogs.list(filter)){
-    listResult.push({
+    arrObjects.push({
       "resourceGroupName": element?.resourceGroupName,
       "action": element?.authorization?.action,
       "user" : element?.claims?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
@@ -51,8 +52,8 @@ try {
       "eventTimestamp": element.eventTimestamp
     })
   }
-  console.log(JSON.stringify(ListResult));
-}catch(error) {
+  console.log(prettyPrint(arrObjects));
+}catch(err) {
   console.error(JSON.stringify(err));
 }
 

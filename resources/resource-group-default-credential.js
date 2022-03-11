@@ -26,32 +26,38 @@ const { ResourceManagementClient } = require("@azure/arm-resources");
 
 async function createResourceGroup(){
 
-    const resourceCreatedDate = new Date().toISOString();
-    const resourceGroupName = `${myAppName}-resource-group`;
-    const resourceGroupLocation = "eastus";
+    try {
+        const resourceCreatedDate = new Date().toISOString();
+        const resourceGroupName = `${myAppName}-resource-group`;
+        const resourceGroupLocation = "eastus";
 
-    // Use Azure Identity Default Credential
-    const credentials = new DefaultAzureCredential();
+        // Use Azure Identity Default Credential
+        const credentials = new DefaultAzureCredential();
+        
+        // Use Azure SDK for Resource Management
+        const resourceManagement = new ResourceManagementClient(credentials, subscriptionId);
+
+        // Create
+        const parameters = {
+            location: resourceGroupLocation,
+            tags: {
+                owner: myEmailAlias,
+                created: resourceCreatedDate
+            },
+        };
+        console.log("Creating...");
+        const createResult = await resourceManagement.resourceGroups.createOrUpdate(resourceGroupName, parameters);
+        console.log(JSON.stringify(createResult));
+
+        // Check existence - returns boolean
+        console.log("Exists...");
+        const checkExistenceResult = await resourceManagement.resourceGroups.checkExistence(resourceGroupName);
+        console.log(JSON.stringify(checkExistenceResult));
+        
+    } catch (err) {
+        console.log(err)
+    }
     
-    // Use Azure SDK for Resource Management
-    const client = new ResourceManagementClient(credentials, subscriptionId);
-
-    // Create
-    const parameters = {
-        location: resourceGroupLocation,
-        tags: {
-            owner: myEmailAlias,
-            created: resourceCreatedDate
-        },
-    };
-    console.log("Creating...");
-    const createResult = await client.resourceGroups.createOrUpdate(resourceGroupName, parameters);
-    console.log(JSON.stringify(createResult));
-
-    // Check existence - returns boolean
-    console.log("Exists...");
-    const checkExistenceResult = await client.resourceGroups.checkExistence(resourceGroupName);
-    return checkExistenceResult
 }
 
 createResourceGroup().then(() => {

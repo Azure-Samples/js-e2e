@@ -29,8 +29,8 @@ async function getVmInfo(){
   return result;
 }
 
-getVmInfo().then(res => {
-  console.log(JSON.stringify(res));
+getVmInfo().then(result => {
+  console.log(JSON.stringify(result));
 }).catch(err=> {
   console.log(err);
 })

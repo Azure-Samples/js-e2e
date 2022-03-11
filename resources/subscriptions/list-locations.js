@@ -18,16 +18,20 @@ if (!secret) throw Error("AZURE_CLIENT_SECRET is missing from environment variab
 if (!subscriptionId || !tenantId || !clientId || !secret) return;
 
 try {
+
+  const credentials = new DefaultAzureCredential();
+
   // Create Azure SDK client for Resource Management such as resource groups
   const client = new SubscriptionClient(credentials, subscriptionId);
 
   // List resource groups in subscription
-  const listResult = new Array();
+  const result = new Array();
   for await (const item of client.subscriptions.listLocations(subscriptionId)){
-      listResult.push(item);
+    result.push(item);
   }
-  console.log(JSON.stringify(ListResult));
-} catch(error) {
+  console.log("The result is");
+  console.log(JSON.stringify(result));
+} catch(err) {
   console.log("An error occurred:");
   console.error(err);
 }

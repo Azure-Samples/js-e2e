@@ -21,14 +21,14 @@ const credentials = new DefaultAzureCredential();
 
 try{
     // Create Azure SDK client for Resource Management such as resource groups
-    const client = new ResourceManagementClient(credentials, subscriptionId);
+    const resourceManagement = new ResourceManagementClient(credentials, subscriptionId);
 
     // List resource groups in subscription
-    const listResult = new Array();
-    for await (const item of client.resourceGroups.list()){
-        listResult.push(item);
+    const result = new Array();
+    for await (const item of resourceManagement.resourceGroups.list()){
+        result.push(item);
     }
-    console.log(JSON.stringify(ListResult));
-}catch(error){
+    console.log(JSON.stringify(result));
+}catch(err){
     console.error(JSON.stringify(err));
 }

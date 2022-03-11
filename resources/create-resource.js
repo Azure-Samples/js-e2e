@@ -23,13 +23,14 @@ References:
 const { InteractiveBrowserCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
-async function createAzureFaceResource(){
+// Use Azure Identity Default Credential
+const credentials = new InteractiveBrowserCredential();
 
-  // Use Azure Identity Default Credential
-  const credentials = new InteractiveBrowserCredential();
-  
+async function createAzureFaceResource(credentials){
+
   // Use Azure SDK for Resource Management
   const client = new ResourceManagementClient(credential, subscriptionId);
+  const resources = client.resources;
 
   // REPLACE WITH YOUR VALUES
   const subscriptionId = "REPLACE-WITH-YOUR-SUBSCRIPTION-ID";
@@ -69,11 +70,11 @@ async function createAzureFaceResource(){
 
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-  const longRunningOperationResult = await client.resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+  const longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
   return longRunningOperationResult;
 }
 
-createAzureFaceResource().then(res => {
+createAzureFaceResource(credentials).then(res => {
   console.log(JSON.stringify(res));
 }).catch(err=> {
   console.log(err);
