@@ -43,46 +43,50 @@ const credentials = new DefaultAzureCredential();
 
 async function createAzureFaceResource(credentials){
 
-  // Use Azure SDK for Resource Management
-  const resourceManagementClientContext = new ResourceManagementClient(credentials, subscriptionId);
-  const resources = resourceManagementClientContext.resources;
+  try {
+    // Use Azure SDK for Resource Management
+    const resourceManagementClientContext = new ResourceManagementClient(credentials, subscriptionId);
+    const resources = resourceManagementClientContext.resources;
 
-  // These are specific to the Azure Cognitive Services Face API
-  const resourceProviderNamespace = "Microsoft.CognitiveServices";
-  const parentResourcePath = "";
-  const apiVersion = "2017-04-18";
+    // These are specific to the Azure Cognitive Services Face API
+    const resourceProviderNamespace = "Microsoft.CognitiveServices";
+    const parentResourcePath = "";
+    const apiVersion = "2017-04-18";
 
-  let parameters = {
-    type: "Microsoft.CognitiveServices/accounts",
-    location: "eastus",
-    tags: {
-      alias: emailAlias,
-      app: appName
-    },
-    sku: {
-      name: "F0"
-    },
-    kind: "Face",
-    properties: {
-      networkAcls: {
-        defaultAction: "Allow",
-        virtualNetworkRules: [],
-        ipRules: []
+    let parameters = {
+      type: "Microsoft.CognitiveServices/accounts",
+      location: "eastus",
+      tags: {
+        alias: emailAlias,
+        app: appName
       },
-      privateEndpointConnections: [],
-      publicNetworkAccess: "Enabled"
+      sku: {
+        name: "F0"
+      },
+      kind: "Face",
+      properties: {
+        networkAcls: {
+          defaultAction: "Allow",
+          virtualNetworkRules: [],
+          ipRules: []
+        },
+        privateEndpointConnections: [],
+        publicNetworkAccess: "Enabled"
+      }
     }
+
+    // Use Date as part of the resource name convention
+    const date = new Date();
+    const createdDate = date.toJSON().slice(0, 10)
+
+    const resourceType = "accounts";
+    const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
+    const longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+    console.log(longRunningOperationResult)
+    return longRunningOperationResult;
+  } catch (err) {
+    console.log(err);
   }
-
-  // Use Date as part of the resource name convention
-  const date = new Date();
-  const createdDate = date.toJSON().slice(0, 10)
-
-  const resourceType = "accounts";
-  const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-  const longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
-  console.log(longRunningOperationResult)
-  return longRunningOperationResult;
 }
 
 createAzureFaceResource().then(() => {

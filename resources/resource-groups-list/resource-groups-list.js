@@ -30,5 +30,5 @@ try{
     }
     console.log(JSON.stringify(result));
 }catch(err){
-    console.error(JSON.stringify(err));
+    console.log(err);
 }

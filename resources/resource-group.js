@@ -69,7 +69,7 @@ async function resourceGroupActions(credential){
         // List all
         console.log("All...");
         const allListResult = new Array();
-        for await (const item of client.resourceGroups.listAll()){
+        for await (const item of resourceManagement.resourceGroups.listAll()){
             allListResult.push(item);
         }
         console.log(JSON.stringify(allListResult));
@@ -77,7 +77,7 @@ async function resourceGroupActions(credential){
         
         // Delete - HTTP status 200 on success, no body
         console.log("Deleting...");
-        const deleteResult = await client.resourceGroups.deleteMethod(resourceGroupName);
+        const deleteResult = await resourceManagement.resourceGroups.deleteMethod(resourceGroupName);
         console.log(JSON.stringify(deleteResult));
 
         return allListResult;
