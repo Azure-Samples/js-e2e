@@ -1,32 +1,36 @@
-const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
-const { ComputeManagementClient }  = require('@azure/arm-compute');
+const {
+  ClientSecretCredential,
+  DefaultAzureCredential,
+} = require("@azure/identity");
+const { ComputeManagementClient } = require("@azure/arm-compute");
 
 // Azure authentication in environment variables for DefaultAzureCredential
 let credentials = null;
-const tenantId = process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID"; 
-const clientId = process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID"; 
-const secret = process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
-const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
+const tenantId =
+  process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID";
+const clientId =
+  process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID";
+const secret =
+  process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
+const subscriptionId =
+  process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
 
-if(process.env.production){
-
+if (process.env.production) {
   // production
   credentials = new DefaultAzureCredential();
-
-}else{
-
+} else {
   // development
   credentials = new ClientSecretCredential(tenantId, clientId, secret);
   console.log("development");
 }
 
-async function listVMs(){
+async function listVMs() {
   // use credential to authenticate with Azure SDKs
-  const client = new ComputeManagementClient(credentials,subscriptionId);
+  const client = new ComputeManagementClient(credentials, subscriptionId);
 
   // get details of each subscription
   const listResult = new Array();
-  for await (const item of client.virtualMachines.listAll()){
+  for await (const item of client.virtualMachines.listAll()) {
     listResult.push(item);
   }
   return listResult;
@@ -91,8 +95,10 @@ async function listVMs(){
     */
 }
 
-listVMs().then(result => {
-  console.log(result);
-}).catch(err=> {
-  console.log(err);
-})
+listVMs()
+  .then((result) => {
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log(err);
+  });

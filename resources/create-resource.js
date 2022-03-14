@@ -26,8 +26,7 @@ const { ResourceManagementClient } = require("@azure/arm-resources");
 // Use Azure Identity Default Credential
 const credentials = new InteractiveBrowserCredential();
 
-async function createAzureFaceResource(credentials){
-
+async function createAzureFaceResource(credentials) {
   // Use Azure SDK for Resource Management
   const client = new ResourceManagementClient(credential, subscriptionId);
   const resources = client.resources;
@@ -47,35 +46,45 @@ async function createAzureFaceResource(credentials){
     location: "eastus",
     tags: {
       alias: process.env["EMAIL-ALIAS"] || "REPLACE-WITH-YOUR-EMAIL-ALIAS",
-      app: process.env["APP-NAME"] || "REPLACE-WITH-YOUR-APP-NAME"
+      app: process.env["APP-NAME"] || "REPLACE-WITH-YOUR-APP-NAME",
     },
     sku: {
-      name: "F0"
+      name: "F0",
     },
     kind: "Face",
     properties: {
       networkAcls: {
         defaultAction: "Allow",
         virtualNetworkRules: [],
-        ipRules: []
+        ipRules: [],
       },
       privateEndpointConnections: [],
-      publicNetworkAccess: "Enabled"
-    }
-  }
+      publicNetworkAccess: "Enabled",
+    },
+  };
 
   // Use Date as part of the resource name convention
   const date = new Date();
-  const createdDate = date.toJSON().slice(0, 10)
+  const createdDate = date.toJSON().slice(0, 10);
 
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-  const longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
+  const longRunningOperationResult = await resources.beginCreateOrUpdate(
+    resourceGroupName,
+    resourceProviderNamespace,
+    parentResourcePath,
+    resourceType,
+    resourceName,
+    apiVersion,
+    parameters
+  );
   return longRunningOperationResult;
 }
 
-createAzureFaceResource(credentials).then(res => {
-  console.log(JSON.stringify(res));
-}).catch(err=> {
-  console.log(err);
-})
+createAzureFaceResource(credentials)
+  .then((res) => {
+    console.log(JSON.stringify(res));
+  })
+  .catch((err) => {
+    console.log(err);
+  });

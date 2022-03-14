@@ -16,7 +16,7 @@ References:
 
 */
 
-require('dotenv').config();
+require("dotenv").config();
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 const myEmailAlias = process.env["EMAIL-ALIAS"];
 const myAppName = process.env["APP-NAME"];
@@ -24,44 +24,51 @@ const myAppName = process.env["APP-NAME"];
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
-async function createResourceGroup(){
+async function createResourceGroup() {
+  try {
+    const resourceCreatedDate = new Date().toISOString();
+    const resourceGroupName = `${myAppName}-resource-group`;
+    const resourceGroupLocation = "eastus";
 
-    try {
-        const resourceCreatedDate = new Date().toISOString();
-        const resourceGroupName = `${myAppName}-resource-group`;
-        const resourceGroupLocation = "eastus";
+    // Use Azure Identity Default Credential
+    const credentials = new DefaultAzureCredential();
 
-        // Use Azure Identity Default Credential
-        const credentials = new DefaultAzureCredential();
-        
-        // Use Azure SDK for Resource Management
-        const resourceManagement = new ResourceManagementClient(credentials, subscriptionId);
+    // Use Azure SDK for Resource Management
+    const resourceManagement = new ResourceManagementClient(
+      credentials,
+      subscriptionId
+    );
 
-        // Create
-        const parameters = {
-            location: resourceGroupLocation,
-            tags: {
-                owner: myEmailAlias,
-                created: resourceCreatedDate
-            },
-        };
-        console.log("Creating...");
-        const createResult = await resourceManagement.resourceGroups.createOrUpdate(resourceGroupName, parameters);
-        console.log(JSON.stringify(createResult));
+    // Create
+    const parameters = {
+      location: resourceGroupLocation,
+      tags: {
+        owner: myEmailAlias,
+        created: resourceCreatedDate,
+      },
+    };
+    console.log("Creating...");
+    const createResult = await resourceManagement.resourceGroups.createOrUpdate(
+      resourceGroupName,
+      parameters
+    );
+    console.log(JSON.stringify(createResult));
 
-        // Check existence - returns boolean
-        console.log("Exists...");
-        const checkExistenceResult = await resourceManagement.resourceGroups.checkExistence(resourceGroupName);
-        console.log(JSON.stringify(checkExistenceResult));
-        
-    } catch (err) {
-        console.log(err)
-    }
-    
+    // Check existence - returns boolean
+    console.log("Exists...");
+    const checkExistenceResult = await resourceManagement.resourceGroups.checkExistence(
+      resourceGroupName
+    );
+    console.log(JSON.stringify(checkExistenceResult));
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-createResourceGroup().then(() => {
+createResourceGroup()
+  .then(() => {
     console.log("done");
-}).catch(err => {
+  })
+  .catch((err) => {
     console.log(err);
-});
+  });

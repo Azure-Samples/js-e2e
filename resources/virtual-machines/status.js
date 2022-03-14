@@ -1,7 +1,7 @@
 const {
-    ClientSecretCredential,
-    DefaultAzureCredential,
-  } = require("@azure/identity");
+  ClientSecretCredential,
+  DefaultAzureCredential,
+} = require("@azure/identity");
 const { ComputeManagementClient } = require("@azure/arm-compute");
 
 // Azure authentication in environment variables for DefaultAzureCredential
@@ -23,21 +23,26 @@ if (process.env.production) {
   credentials = new ClientSecretCredential(tenantId, clientId, secret);
 }
 
-async function listVMsStatus(){
+async function listVMsStatus() {
   // Set params to only ask for status
-  const virtualMachinesListAllOptionalParams = {statusOnly: "true",};
+  const virtualMachinesListAllOptionalParams = { statusOnly: "true" };
 
-  const computeClient = new ComputeManagementClient(credentials,subscriptionId);
+  const computeClient = new ComputeManagementClient(
+    credentials,
+    subscriptionId
+  );
 
   const result = new Array();
-  for await (const item of computeClient.virtualMachines.listAll(virtualMachinesListAllOptionalParams)){
+  for await (const item of computeClient.virtualMachines.listAll(
+    virtualMachinesListAllOptionalParams
+  )) {
     result.push(item);
   }
   result.map((vm) => {
     console.log(`${vm.name}`);
     vm.instanceView.statuses.map((status) => {
-
-      console.log(`---${status.displayStatus} ${(status.time) ? status.time : ""}`
+      console.log(
+        `---${status.displayStatus} ${status.time ? status.time : ""}`
 
         /*
         Example: 
@@ -51,12 +56,12 @@ async function listVMsStatus(){
 }
 
 listVMsStatus()
-    .then((result) => {
-      console.log("done");
-    })
-    .catch((ex) => {
-      console.log(ex);
-    });
+  .then((result) => {
+    console.log("done");
+  })
+  .catch((ex) => {
+    console.log(ex);
+  });
 
 /*
     Result is an array of VMs with only status. Each item looks something like:

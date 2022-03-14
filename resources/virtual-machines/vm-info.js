@@ -1,39 +1,51 @@
-const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
-const { ComputeManagementClient }  = require('@azure/arm-compute');
+const {
+  ClientSecretCredential,
+  DefaultAzureCredential,
+} = require("@azure/identity");
+const { ComputeManagementClient } = require("@azure/arm-compute");
 
 // Azure authentication in environment variables for DefaultAzureCredential
 let credentials = null;
-const tenantId = process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID"; 
-const clientId = process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID"; 
-const secret = process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
-const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
+const tenantId =
+  process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID";
+const clientId =
+  process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID";
+const secret =
+  process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
+const subscriptionId =
+  process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
 
 const resourceGroupName = "REPLACE-WITHYOUR-RESOURCE_GROUP-NAME";
 const vmResourceName = "REPLACE-WITHYOUR-RESOURCE-NAME";
 
-if(process.env.production){
-
+if (process.env.production) {
   // production
   credentials = new DefaultAzureCredential();
-
-}else{
-
+} else {
   // development
   credentials = new ClientSecretCredential(tenantId, clientId, secret);
   console.log("development");
 }
 
-async function getVmInfo(){
-  const computeClient = new ComputeManagementClient(credentials, subscriptionId);
-  const result = await computeClient.virtualMachines.get(resourceGroupName, vmResourceName);
+async function getVmInfo() {
+  const computeClient = new ComputeManagementClient(
+    credentials,
+    subscriptionId
+  );
+  const result = await computeClient.virtualMachines.get(
+    resourceGroupName,
+    vmResourceName
+  );
   return result;
 }
 
-getVmInfo().then(result => {
-  console.log(JSON.stringify(result));
-}).catch(err=> {
-  console.log(err);
-})
+getVmInfo()
+  .then((result) => {
+    console.log(JSON.stringify(result));
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 /*
 {
