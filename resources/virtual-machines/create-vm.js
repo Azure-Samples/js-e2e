@@ -178,10 +178,6 @@ async function getNICInfo(){
 }
 
 async function createVirtualMachine(){
-  console.log("6.Creating Virtual Machine: " + vmName);
-  console.log(
-    " VM create parameters: " + util.inspect(vmParameters, { depth: null })
-  );
   const vmParameters = {
     location: location,
     osProfile: {
@@ -220,14 +216,12 @@ async function createVirtualMachine(){
       ],
     },
   };
-  const resCreate = await computeClient.virtualMachines.beginCreateOrUpdateAndWait(resourceGroupName,vmName,vmParameters);
-  const getCreate = await computeClient.virtualMachines.get(resourceGroupName,vmName)
-
   console.log("6.Creating Virtual Machine: " + vmName);
   console.log(
     " VM create parameters: " + util.inspect(vmParameters, { depth: null })
   );
-  return getCreate;
+  const resCreate = await computeClient.virtualMachines.beginCreateOrUpdateAndWait(resourceGroupName,vmName,vmParameters);
+  return await computeClient.virtualMachines.get(resourceGroupName,vmName)
 }
 
 const _generateRandomId = (prefix, existIds) => {

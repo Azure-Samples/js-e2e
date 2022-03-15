@@ -69,7 +69,7 @@ async function resourceGroupActions(credential){
         // List all
         console.log("All...");
         const allListResult = new Array();
-        for await (const item of resourceManagement.resourceGroups.listAll()){
+        for await (const item of resourceManagement.resourceGroups.list()){
             allListResult.push(item);
         }
         console.log(JSON.stringify(allListResult));
