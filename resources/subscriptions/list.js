@@ -1,22 +1,22 @@
-const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
+const {
+  ClientSecretCredential,
+  DefaultAzureCredential,
+} = require("@azure/identity");
 const { SubscriptionClient } = require("@azure/arm-subscriptions");
-require('dotenv').config();
+require("dotenv").config();
 
 let credentials = null;
 
-const tenantId = process.env["AZURE_TENANT_ID"]; 
-const clientId = process.env["AZURE_CLIENT_ID"]; 
+const tenantId = process.env["AZURE_TENANT_ID"];
+const clientId = process.env["AZURE_CLIENT_ID"];
 const secret = process.env["AZURE_CLIENT_SECRET"];
 
-if(process.env.NODE_ENV && process.env.NODE_ENV==='production'){
-
+if (process.env.NODE_ENV && process.env.NODE_ENV === "production") {
   // production
   credentials = new DefaultAzureCredential();
-
-}else{
-
+} else {
   // development
-  if(tenantId && clientId && secret){
+  if (tenantId && clientId && secret) {
     console.log("development");
     credentials = new ClientSecretCredential(tenantId, clientId, secret);
   } else {
@@ -24,14 +24,16 @@ if(process.env.NODE_ENV && process.env.NODE_ENV==='production'){
   }
 }
 
-async function listSubscriptions(){
+async function listSubscriptions() {
   try {
     // use credential to authenticate with Azure SDKs
     const client = new SubscriptionClient(credentials);
-  
+
     // get details of each subscription
-    for await (const item of client.subscriptions.list()){
-      const subscriptionDetails = await client.subscriptions.get(item.subscriptionId);
+    for await (const item of client.subscriptions.list()) {
+      const subscriptionDetails = await client.subscriptions.get(
+        item.subscriptionId
+      );
       /* 
         Each item looks like:
       
@@ -48,17 +50,17 @@ async function listSubscriptions(){
           authorizationSource: 'RoleBased'
         },
     */
-      console.log(subscriptionDetails)
+      console.log(subscriptionDetails);
     }
-  } catch(error) {
+  } catch (error) {
     console.error(JSON.stringify(err));
   }
 }
 
-listSubscriptions().then(() => {
-  console.log("done")
-}).catch(ex => {
-  console.log(ex)
-})
-
-
+listSubscriptions()
+  .then(() => {
+    console.log("done");
+  })
+  .catch((ex) => {
+    console.log(ex);
+  });

@@ -7,18 +7,20 @@ const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 const creds = new DefaultAzureCredential();
 const client = new AuthorizationManagementClient(creds, subscriptionId);
 
-async function listOfSubscriptions(){
+async function listOfSubscriptions() {
   const ListResult = new Array();
-  for await (const item of client.classicAdministrators.list()){
+  for await (const item of client.classicAdministrators.list()) {
     ListResult.push(item);
   }
   return ListResult;
 }
 
-listOfSubscriptions().then((result) => {
-  console.log("The result is:");
-  console.log(result);
-}).catch((err) => {
-  console.log("An error occurred:");
-  console.error(err);
-});
+listOfSubscriptions()
+  .then((result) => {
+    console.log("The result is:");
+    console.log(result);
+  })
+  .catch((err) => {
+    console.log("An error occurred:");
+    console.error(err);
+  });

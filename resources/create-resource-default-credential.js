@@ -29,7 +29,7 @@ References:
 
 
 */
-require('dotenv').config();
+require("dotenv").config();
 const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"];
 const resourceGroupName = process.env["AZURE-RESOURCE-GROUP-NAME"];
 const emailAlias = process.env["EMAIL-ALIAS"];
@@ -41,12 +41,14 @@ const { ResourceManagementClient } = require("@azure/arm-resources");
 // Use Azure Identity Default Credential
 const credentials = new DefaultAzureCredential();
 
-async function createAzureFaceResource(credentials){
-
+async function createAzureFaceResource(credentials) {
   try {
     // Use Azure SDK for Resource Management
-    const resourceManagementClientContext = new ResourceManagementClient(credentials, subscriptionId);
-    const resources = resourceManagementClientContext.resources;
+    const resourceManagementClient = new ResourceManagementClient(
+      credentials,
+      subscriptionId
+    );
+    const resources = resourceManagementClient.resources;
 
     // These are specific to the Azure Cognitive Services Face API
     const resourceProviderNamespace = "Microsoft.CognitiveServices";
@@ -58,39 +60,49 @@ async function createAzureFaceResource(credentials){
       location: "eastus",
       tags: {
         alias: emailAlias,
-        app: appName
+        app: appName,
       },
       sku: {
-        name: "F0"
+        name: "F0",
       },
       kind: "Face",
       properties: {
         networkAcls: {
           defaultAction: "Allow",
           virtualNetworkRules: [],
-          ipRules: []
+          ipRules: [],
         },
         privateEndpointConnections: [],
-        publicNetworkAccess: "Enabled"
-      }
-    }
+        publicNetworkAccess: "Enabled",
+      },
+    };
 
     // Use Date as part of the resource name convention
     const date = new Date();
-    const createdDate = date.toJSON().slice(0, 10)
+    const createdDate = date.toJSON().slice(0, 10);
 
     const resourceType = "accounts";
     const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-    const longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
-    console.log(longRunningOperationResult)
+    const longRunningOperationResult = await resources.beginCreateOrUpdate(
+      resourceGroupName,
+      resourceProviderNamespace,
+      parentResourcePath,
+      resourceType,
+      resourceName,
+      apiVersion,
+      parameters
+    );
+    console.log(longRunningOperationResult);
     return longRunningOperationResult;
   } catch (err) {
     console.log(err);
   }
 }
 
-createAzureFaceResource().then(() => {
-  console.log("done");
-}).catch((err) => {
-  console.error(err);
-});
+createAzureFaceResource()
+  .then(() => {
+    console.log("done");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
