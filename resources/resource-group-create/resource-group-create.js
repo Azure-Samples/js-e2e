@@ -23,13 +23,13 @@ if (!secret)
 // Create Azure authentication credentials
 const credentials = new DefaultAzureCredential();
 
-// Create Azure SDK client for Resource Management such as resource groups
-const resourceManagement = new ResourceManagementClient(
-  credentials,
-  subscriptionId
-);
-
 try {
+  // Create Azure SDK client for Resource Management such as resource groups
+  const resourceManagement = new ResourceManagementClient(
+    credentials,
+    subscriptionId
+  );  
+  
   const ownerAlias = "jsmith";
   const location = "westus";
 
