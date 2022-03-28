@@ -1,7 +1,10 @@
-const { ClientSecretCredential, DefaultAzureCredential } = require("@azure/identity");
+const {
+  ClientSecretCredential,
+  DefaultAzureCredential,
+} = require("@azure/identity");
 const { MonitorManagementClient } = require("@azure/arm-monitor");
-const dayjs = require('dayjs');
-const { prettyPrint } = require('@base2/pretty-print-object');
+const dayjs = require("dayjs");
+const { prettyPrint } = require("@base2/pretty-print-object");
 
 // resource group - returns all resource groups if not specified
 const resourceGroupName = "";
@@ -11,53 +14,59 @@ const daysAgo = 10;
 
 // filter
 // https://docs.microsoft.com/en-us/javascript/api/@azure/arm-monitor/activitylogs?view=azure-node-latest#list_string__ActivityLogsListOptionalParams__ServiceCallback_EventDataCollection__
-const greaterThanIsoTime = dayjs().subtract(daysAgo, 'day').toISOString()
+const greaterThanIsoTime = dayjs().subtract(daysAgo, "day").toISOString();
 const lessThanIsoTime = new Date().toISOString();
-let filter = `eventTimestamp ge '${greaterThanIsoTime}' and eventTimestamp le '${lessThanIsoTime}'`
-filter += (resourceGroupName) ? ` and resourceGroupName eq '${resourceGroupName}'` : null;
+let filter = `eventTimestamp ge '${greaterThanIsoTime}' and eventTimestamp le '${lessThanIsoTime}'`;
+filter += resourceGroupName
+  ? ` and resourceGroupName eq '${resourceGroupName}'`
+  : null;
 
 // Azure authentication in environment variables for DefaultAzureCredential
 let credentials = null;
-const tenantId = process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID"; 
-const clientId = process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID"; 
-const secret = process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
-const subscriptionId = process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
+const tenantId =
+  process.env["AZURE_TENANT_ID"] || "REPLACE-WITH-YOUR-TENANT-ID";
+const clientId =
+  process.env["AZURE_CLIENT_ID"] || "REPLACE-WITH-YOUR-CLIENT-ID";
+const secret =
+  process.env["AZURE_CLIENT_SECRET"] || "REPLACE-WITH-YOUR-CLIENT-SECRET";
+const subscriptionId =
+  process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
 
-if(process.env.production){
-
+if (process.env.production) {
   // production
   credentials = new DefaultAzureCredential();
-
-}else{
-
+} else {
   // development
   credentials = new ClientSecretCredential(tenantId, clientId, secret);
   console.log("development");
 }
 
-// use credential to authenticate with Azure SDKs
-const client = new MonitorManagementClient(credentials, subscriptionId);
+try {
+  // use credential to authenticate with Azure SDKs
+  const client = new MonitorManagementClient(credentials, subscriptionId);
 
-client.activityLogs.list(filter).then((result) => {
-  let arrObjects = [];
-
-  result.forEach(element => {
+  const arrObjects = new Array();
+  for await (const element of client.activityLogs.list(filter)) {
     arrObjects.push({
-      "resourceGroupName": element?.resourceGroupName,
-      "action": element?.authorization?.action,
-      "user" : element?.claims?.["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
-      "resourceProviderName": element?.resourceProviderName,
-      "resourceType": element?.resourceType,
-      "operationName": element.operationName,
-      "status": element.status,
-      "eventTimestamp": element.eventTimestamp
-  })});
-
+      resourceGroupName: element?.resourceGroupName,
+      action: element?.authorization?.action,
+      user:
+        element?.claims?.[
+          "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"
+        ],
+      resourceProviderName: element?.resourceProviderName,
+      resourceType: element?.resourceType,
+      operationName: element.operationName,
+      status: element.status,
+      eventTimestamp: element.eventTimestamp,
+    });
+  }
   console.log(prettyPrint(arrObjects));
-}).catch((err) => {
+} catch (err) {
   console.log("An error occurred:");
   console.log(err);
-});
+}
+
 /*
 
 Example element:

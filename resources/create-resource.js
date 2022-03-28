@@ -20,15 +20,16 @@ References:
 
 */
 
+const { InteractiveBrowserCredential } = require("@azure/identity");
+const { ResourceManagementClient } = require("@azure/arm-resources");
 
-const msRestNodeAuth = require("@azure/ms-rest-nodeauth");
-const { ResourceManagementClientContext, Resources } = require("@azure/arm-resources");
+// Use Azure Identity Default Credential
+const credentials = new InteractiveBrowserCredential();
 
-const createAzureFaceResource = async (credentials) => {
-
-  // Use Azure SDK
-  const resourceManagementClientContext = new ResourceManagementClientContext(credentials, subscriptionId);
-  const resources = new Resources(resourceManagementClientContext);
+async function createAzureFaceResource(credentials) {
+  // Use Azure SDK for Resource Management
+  const client = new ResourceManagementClient(credential, subscriptionId);
+  const resources = client.resources;
 
   // REPLACE WITH YOUR VALUES
   const subscriptionId = "REPLACE-WITH-YOUR-SUBSCRIPTION-ID";
@@ -45,38 +46,45 @@ const createAzureFaceResource = async (credentials) => {
     location: "eastus",
     tags: {
       alias: process.env["EMAIL-ALIAS"] || "REPLACE-WITH-YOUR-EMAIL-ALIAS",
-      app: process.env["APP-NAME"] || "REPLACE-WITH-YOUR-APP-NAME"
+      app: process.env["APP-NAME"] || "REPLACE-WITH-YOUR-APP-NAME",
     },
     sku: {
-      name: "F0"
+      name: "F0",
     },
     kind: "Face",
     properties: {
       networkAcls: {
         defaultAction: "Allow",
         virtualNetworkRules: [],
-        ipRules: []
+        ipRules: [],
       },
       privateEndpointConnections: [],
-      publicNetworkAccess: "Enabled"
-    }
-  }
-  
+      publicNetworkAccess: "Enabled",
+    },
+  };
+
   // Use Date as part of the resource name convention
   const date = new Date();
-  const createdDate = date.toJSON().slice(0, 10)
+  const createdDate = date.toJSON().slice(0, 10);
 
   const resourceType = "accounts";
   const resourceName = `${parameters.tags.alias}-${resourceGroupName}-${resourceType}-${parameters.sku.name}-${createdDate}`;
-
-  longRunningOperationResult = await resources.beginCreateOrUpdate(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters);
-
-  console.log(longRunningOperationResult)
-
+  const longRunningOperationResult = await resources.beginCreateOrUpdate(
+    resourceGroupName,
+    resourceProviderNamespace,
+    parentResourcePath,
+    resourceType,
+    resourceName,
+    apiVersion,
+    parameters
+  );
+  return longRunningOperationResult;
 }
 
-msRestNodeAuth.interactiveLogin().then(async (credentials) => {
-  await createAzureFaceResource(credentials)
-}).catch((err) => {
-  console.error(err);
-});
+createAzureFaceResource(credentials)
+  .then((res) => {
+    console.log(JSON.stringify(res));
+  })
+  .catch((err) => {
+    console.log(err);
+  });

@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@azure/arm-monitor": "^6.1.1",
+    "@azure/arm-monitor": "^7.0.0",
     "@azure/identity": "^1.5.2",
     "@azure/monitor-query": "^1.0.0-beta.5",
     "@base2/pretty-print-object": "^1.0.1",

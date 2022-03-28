@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@azure/arm-resources": "^4.2.1",
+    "@azure/arm-resources": "^5.0.0",
     "@azure/identity": "^1.5.2",
     "stringify-object": "^4.0.0"
   }

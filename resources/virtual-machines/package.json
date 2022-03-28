@@ -4,10 +4,10 @@
   "description": "",
   "main": "create-vm.js",
   "dependencies": {
-    "@azure/arm-compute": "^16.5.0",
-    "@azure/arm-network": "^25.2.0",
-    "@azure/arm-resources": "^4.2.2",
-    "@azure/arm-storage": "^16.1.2",
+    "@azure/arm-compute": "^17.2.0",
+    "@azure/arm-network": "^26.0.0",
+    "@azure/arm-resources": "^5.0.0",
+    "@azure/arm-storage": "^17.1.0",
     "@azure/identity": "^2.0.0"
   },
   "scripts": {

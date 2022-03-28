@@ -19,7 +19,7 @@ let nicInfo = null;
 const yourAlias = "diberry";
 
 // CHANGE THIS - used to add tags to resources
-const projectName = "azure-samples-create-vm"
+const projectName = "azure-samples-create-vm";
 
 // Resource configs
 const location = "eastus";
@@ -42,7 +42,7 @@ const secret =
 const subscriptionId =
   process.env["AZURE_SUBSCRIPTION_ID"] || "REPLACE-WITH-YOUR-SUBSCRIPTION_ID";
 
-  let credentials = null;
+let credentials = null;
 
 if (process.env.production) {
   // production
@@ -62,12 +62,7 @@ const storageClient = new StorageManagementClient(credentials, subscriptionId);
 const networkClient = new NetworkManagementClient(credentials, subscriptionId);
 
 // Create resources then manage them (on/off)
-const main = async () => {
-  await createResources();
-};
-
-// Create resources then manage them (on/off)
-const createResources = async () => {
+async function createResources() {
   try {
     result = await createResourceGroup();
     accountInfo = await createStorageAccount();
@@ -82,21 +77,22 @@ const createResources = async () => {
   } catch (err) {
     console.log(err);
   }
-};
+}
 
-const createResourceGroup = async () => {
+async function createResourceGroup() {
+  console.log("\n1.Creating resource group: " + resourceGroupName);
   const groupParameters = {
     location: location,
     tags: { project: projectName },
   };
-  console.log("\n1.Creating resource group: " + resourceGroupName);
-  return await resourceClient.resourceGroups.createOrUpdate(
+  const resCreate = await resourceClient.resourceGroups.createOrUpdate(
     resourceGroupName,
     groupParameters
   );
-};
+  return resCreate;
+}
 
-const createStorageAccount = async () => {
+async function createStorageAccount() {
   console.log("\n2.Creating storage account: " + storageAccountName);
   const createParameters = {
     location: location,
@@ -105,16 +101,18 @@ const createStorageAccount = async () => {
     },
     kind: "Storage",
     tags: {
-      project: projectName
+      project: projectName,
     },
   };
-  return await storageClient.storageAccounts.create(
+  return await storageClient.storageAccounts.beginCreateAndWait(
     resourceGroupName,
     storageAccountName,
     createParameters
   );
-};
-const createVnet = async () => {
+}
+
+async function createVnet() {
+  console.log("\n3.Creating vnet: " + vnetName);
   const vnetParameters = {
     location: location,
     addressSpace: {
@@ -125,23 +123,25 @@ const createVnet = async () => {
     },
     subnets: [{ name: subnetName, addressPrefix: "10.0.0.0/24" }],
   };
-  console.log("\n3.Creating vnet: " + vnetName);
-  return await networkClient.virtualNetworks.createOrUpdate(
+  return await networkClient.virtualNetworks.beginCreateOrUpdateAndWait(
     resourceGroupName,
     vnetName,
     vnetParameters
   );
-};
+}
 
-const getSubnetInfo = async () => {
+async function getSubnetInfo() {
   console.log("\nGetting subnet info for: " + subnetName);
-  return await networkClient.subnets.get(
+  const getResult = await networkClient.subnets.get(
     resourceGroupName,
     vnetName,
     subnetName
   );
-};
-const createPublicIP = async () => {
+  return getResult;
+}
+
+async function createPublicIP() {
+  console.log("\n4.Creating public IP: " + publicIPName);
   const publicIPParameters = {
     location: location,
     publicIPAllocationMethod: "Dynamic",
@@ -149,15 +149,15 @@ const createPublicIP = async () => {
       domainNameLabel: domainNameLabel,
     },
   };
-  console.log("\n4.Creating public IP: " + publicIPName);
-  return await networkClient.publicIPAddresses.createOrUpdate(
+  return await networkClient.publicIPAddresses.beginCreateOrUpdateAndWait(
     resourceGroupName,
     publicIPName,
     publicIPParameters
   );
-};
+}
 
-const createNIC = async (subnetInfo, publicIPInfo) => {
+async function createNIC(subnetInfo, publicIPInfo) {
+  console.log("\n5.Creating Network Interface: " + networkInterfaceName);
   const nicParameters = {
     location: location,
     ipConfigurations: [
@@ -169,14 +169,14 @@ const createNIC = async (subnetInfo, publicIPInfo) => {
       },
     ],
   };
-  console.log("\n5.Creating Network Interface: " + networkInterfaceName);
-  return await networkClient.networkInterfaces.createOrUpdate(
+  return await networkClient.networkInterfaces.beginCreateOrUpdateAndWait(
     resourceGroupName,
     networkInterfaceName,
     nicParameters
   );
-};
-const findVMImage = async () => {
+}
+
+async function findVMImage() {
   console.log(
     util.format(
       "\nFinding a VM Image for location %s from " +
@@ -187,22 +187,26 @@ const findVMImage = async () => {
       sku
     )
   );
-  return await computeClient.virtualMachineImages.list(
+  const listResult = new Array();
+  for await (const item of computeClient.virtualMachineImages.list(
     location,
     publisher,
     offer,
-    sku,
-    { top: 1 }
-  );
-};
-const getNICInfo = async () => {
+    sku
+  )) {
+    listResult.push(item);
+  }
+  return listResult;
+}
+
+async function getNICInfo() {
   return await networkClient.networkInterfaces.get(
     resourceGroupName,
     networkInterfaceName
   );
-};
+}
 
-const createVirtualMachine = async (nicId, vmImageVersionNumber) => {
+async function createVirtualMachine() {
   const vmParameters = {
     location: location,
     osProfile: {
@@ -245,12 +249,16 @@ const createVirtualMachine = async (nicId, vmImageVersionNumber) => {
   console.log(
     " VM create parameters: " + util.inspect(vmParameters, { depth: null })
   );
-  await computeClient.virtualMachines.createOrUpdate(
+  const resCreate = await computeClient.virtualMachines.beginCreateOrUpdateAndWait(
     resourceGroupName,
     vmName,
     vmParameters
   );
-};
+  return await computeClient.virtualMachines.get(
+    resourceGroupName,
+    vmName
+  );
+}
 
 const _generateRandomId = (prefix, existIds) => {
   var newNumber;
@@ -275,9 +283,15 @@ const ipConfigName = _generateRandomId(`${yourAlias}crpip`, randomIds);
 const domainNameLabel = _generateRandomId(`${yourAlias}domainname`, randomIds);
 const osDiskName = _generateRandomId(`${yourAlias}osdisk`, randomIds);
 
+async function main() {
+  await createResources();
+}
+
 main()
   .then(() => {
-    console.log(`success - resource group name: ${resourceGroupName}, vm resource name: ${vmName}`);
+    console.log(
+      `success - resource group name: ${resourceGroupName}, vm resource name: ${vmName}`
+    );
   })
   .catch((err) => {
     console.log(err);
