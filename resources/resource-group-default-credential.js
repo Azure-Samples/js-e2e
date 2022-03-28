@@ -24,12 +24,12 @@ const myAppName = process.env["APP-NAME"];
 const { DefaultAzureCredential } = require("@azure/identity");
 const { ResourceManagementClient } = require("@azure/arm-resources");
 
+const resourceCreatedDate = new Date().toISOString();
+const resourceGroupName = `${myAppName}-resource-group`;
+const resourceGroupLocation = "eastus";
+
 async function createResourceGroup() {
   try {
-    const resourceCreatedDate = new Date().toISOString();
-    const resourceGroupName = `${myAppName}-resource-group`;
-    const resourceGroupLocation = "eastus";
-
     // Use Azure Identity Default Credential
     const credentials = new DefaultAzureCredential();
 
