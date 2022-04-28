@@ -43,6 +43,13 @@ These samples are part of the documentation for the [Azure JavaScript Developer 
 * Tools
     * [OpenAPI for Azure Functions](https://github.com/aaronpowell/azure-functions-nodejs-openapi) - This is an extension for Azure Functions to generate OpenAPI spec files from annotated Azure Functions. 
 
+### Microsoft JavaScript packages
+
+* [Azure SDKs](https://github.com/Azure/azure-sdk-for-js) 
+* [PlayWright](https://github.com/microsoft/playwright)
+* [Application Insights](https://github.com/microsoft/ApplicationInsights-node.js)
+* [Rooster](https://www.npmjs.com/package/roosterjs-react)
+
 ## Let us know
 
 If the code, documentation, or other information has errors or is incomplete, let us know. 
