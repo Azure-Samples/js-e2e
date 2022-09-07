@@ -1,108 +1,110 @@
-// This code has been tested with @azure/cosmos and a Azure CosmosDB MongoDB API resource
+import { CosmosClient } from "@azure/cosmos";
 
-const { MongoClient } = require('mongodb');
-const ObjectId = require('mongodb').ObjectID;
+// Unique Id = Guid
+const newGuid = () => {
+    const s4 = () => Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4() + s4() + s4()}`;
+}
 
-// read .env file
-require('dotenv').config();
-
-/* eslint no-return-await: 0 */
-
-const DATABASE_URL = process.env.COSMOSDB_MONGODB_CONNECTION_STRING
-    ? process.env.COSMOSDB_MONGODB_CONNECTION_STRING
-    : 'mongodb://localhost:27017';
-const DATABASE_NAME = process.env.COSMOSDB_MONGODB_DATABASE_NAME || 'my-tutorial-db';
-const DATABASE_COLLECTION_NAME =
-    process.env.COSMOSDB_MONGODB_COLLECTION_NAME
-    || 'my-collection';
-
-let mongoConnection = null;
+let client = null;
 let db = null;
+let container = null;
 
-/* eslint no-console: 0 */
-console.log(`DB:${DATABASE_URL}`);
+// insert array
+export const insert = async (newItems) => {
 
-const insert = async (
-    documents
-) => {
-    // check params
-    if (!db || !documents)
-        throw Error('insertDocuments::missing required params');
+    const results = [];
+    for (const item of newItems) {
 
-    // Get the collection
-    const collection = await db.collection(DATABASE_COLLECTION_NAME);
-
-    // Insert array of documents
-    return await collection.insertMany(documents);
+        item.id = newGuid();
+        const result = await container.items.create(item);
+        results.push(result.item);
+    }
+    return results;
 };
-const find = async (
-    // default is find all
-    query = {}
-) => {
-    
-    // check params
-    if (!db)
-        throw Error('findDocuments::missing required params');
+// find all or by id
+export const find = async (id) => {
 
-    // Get the collection
-    const collection = await db.collection(DATABASE_COLLECTION_NAME );
+    if (!id) {
+        query = "SELECT * from c"
+    } else {
+        query = `SELECT * from c where c.id = '${id}'`
+    }
 
-    // find documents
-    const items = await collection.find(query).toArray();
-    
-    return items;
-};
+    const result = await container.items
+        .query(query)
+        .fetchAll();
 
-const remove= async (
-    id = null
-) => {
-    
-    // check params
-    if (!db )
-        throw Error('removeDocuments::missing required params');
+    return result && result.resources ? result.resources : [];
+}
+// remove all or by id
+export const remove = async (id) => {
 
-    // Get the documents collection
-    const collection = await db.collection(DATABASE_COLLECTION_NAME);
+    // remove 1
+    if (id) {
+        await container.item(id).delete();
+    } else {
 
-    const docs = id ? { _id: ObjectId(id) } : {};
-    
-    // Delete document
-    return await collection.deleteMany(docs);
-};
+        // get all items
+        const items = await find();
 
-const connect = async (url) => {
-    
-    // check params
-    if (!url) throw Error('connect::missing required params');
+        // remove all
+        for await (const item of items) {
+            await container.item(item.id).delete();
+        }
+    }
 
-    return MongoClient.connect(url, { useUnifiedTopology: true });
-};
-/* 
-eslint consistent-return: [0, { "treatUndefinedAsUnspecified": false }]
-*/
-const connectToDatabase = async () => {
+    return;
+}
+// connection with SDK
+const connect = ( cosmosDbEndpoint, cosmosDbKey ) => {
     try {
-        if (!DATABASE_URL || !DATABASE_NAME) {
-            console.log('DB required params are missing');
-            console.log(`DB required params DATABASE_URL = ${DATABASE_URL}`);
-            console.log(`DB required params DATABASE_NAME = ${DATABASE_NAME}`);
+
+        const connectToCosmosDB = {
+            endpoint: cosmosDbEndpoint,
+            key: cosmosDbKey
         }
 
-        mongoConnection = await connect(DATABASE_URL);
-        db = mongoConnection.db(DATABASE_NAME);
-
-        console.log(`DB connected = ${!!db}`);
-        
-        return !!db;
+        return new CosmosClient(connectToCosmosDB);
 
     } catch (err) {
-        console.log('DB not connected - err');
+        console.log('Cosmos DB SQL API - can\'t connected - err');
         console.log(err);
     }
-};
-module.exports = {
-    insert,
-    find,
-    remove,
-    connectToDatabase
-};
+}
+export const connectToDatabase = async ({
+    cosmosDbEndpoint,
+    cosmosDbKey,
+    cosmosDbDatabase,
+    cosmosDbContainer }) => {
+
+    // if not connected, connect to db
+    if (!client) {
+        client = connect(cosmosDbEndpoint,
+            cosmosDbKey);
+    }
+
+    // get db
+    if (client) {
+
+        // get DB
+        const databaseResult = await client.databases.createIfNotExists({ id: cosmosDbDatabase });
+        db = databaseResult.database;
+
+        if (db) {
+            // get Container
+            const containerResult = await db.containers.createIfNotExists({ id: cosmosDbContainer });
+            container = containerResult.container;
+            return !!db;
+        }
+    } else {
+        throw new Error("can't connect to client");
+    }
+
+    if (!db || !container) {
+        throw new Error("can't connect to db or container")
+    } else {
+        console.log(`Connected to ${dbName}: ${containerName}`);
+    }
+
+}
