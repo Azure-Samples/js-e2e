@@ -1,4 +1,4 @@
-// This code has been tested with @azure/cosmos and a Azure CosmosDB SQL API resource
+// This code has been tested with @azure/cosmos and a Azure CosmosDB MongoDB API resource
 
 const { MongoClient } = require('mongodb');
 const ObjectId = require('mongodb').ObjectID;
