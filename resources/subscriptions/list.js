@@ -52,7 +52,7 @@ async function listSubscriptions() {
     */
       console.log(subscriptionDetails);
     }
-  } catch (error) {
+  } catch (err) {
     console.error(JSON.stringify(err));
   }
 }
