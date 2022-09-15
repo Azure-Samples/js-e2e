@@ -6,9 +6,9 @@ dotenv.config();
 import { CosmosClient } from "@azure/cosmos";
 
 // Provide required connection from environment variables
-const key = process.env.COSMOS_DB_KEY;
+const key = process.env.COSMOS_KEY;
 // Endpoint format: https://YOUR-RESOURCE-NAME.documents.azure.com:443/
-const endpoint = process.env.COSMOS_DB_ENDPOINT;
+const endpoint = process.env.COSMOS_ENDPOINT;
 
 // Uniqueness for database and container
 const timeStamp = + new Date();
@@ -16,7 +16,7 @@ const timeStamp = + new Date();
 // Set Database name and container name with unique timestamp
 const databaseName = `contoso_${timeStamp}`;
 const containerName = `products_${timeStamp}`;
-const partitionKeyPath = ["/categoryName", "/name"]
+const partitionKeyPath = ["/categoryName"]
 
 // Authenticate to Azure Cosmos DB
 const cosmosClient = new CosmosClient({ endpoint, key });
@@ -129,3 +129,4 @@ while (queryIterator.hasMoreResults() && count <= pageSize) {
 // Delete item
 const { statusCode } = await container.item(items[2].id, items[2].categoryName).delete();
 console.log(`${items[2].id} ${statusCode==204 ? `Item deleted` : `Item not deleted`}`);
+
