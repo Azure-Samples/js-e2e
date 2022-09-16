@@ -101,7 +101,7 @@ const querySpec = {
     parameters: [
         {
             name: "@categoryName",
-            value: resource.categoryName
+            value: items[2].categoryName
         }
     ]
 };
