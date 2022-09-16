@@ -16,7 +16,7 @@ const timeStamp = + new Date();
 // Set Database name and container name with unique timestamp
 const databaseName = `contoso_${timeStamp}`;
 const containerName = `products_${timeStamp}`;
-const partitionKeyPath = ["/categoryName"]
+const partitionKeyPath = ["/categoryName"];
 
 // Authenticate to Azure Cosmos DB
 const cosmosClient = new CosmosClient({ endpoint, key });
