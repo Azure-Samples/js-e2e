@@ -2,13 +2,7 @@ const Redis = require('ioredis');
 const fs = require('fs');
 const parse = require('csv-parser')
 const { finished } = require('stream/promises');
-
-const config = {
-    "HOST": "YOUR-RESOURCE-NAME.redis.cache.windows.net",
-    "KEY": "YOUR-RESOURCE-PASSWORD"
-    ,
-        "KEY_PREFIX": "demoExample:"
-}
+const { config } = require('./config')
 
 // Create Redis config object
 const configuration = {
@@ -29,7 +23,7 @@ async function insertData(readable) {
         await redis.set(`bar2:${row.id}`, JSON.stringify(row))
     }
 }
- 
+
 /* 
 id,first_name,last_name,email,gender,ip_address
 1,Rodrigo,Lock,rlock0@eventbrite.com,Agender,73.93.61.37
@@ -51,8 +45,8 @@ const readable = fs
 
 // Pipe rows to insert function
 insertData(readable)
-.then(() => {
-    console.log('succeeded');
-    redis.disconnect();
-})
-.catch(console.error);
+    .then(() => {
+        console.log('succeeded');
+        redis.disconnect();
+    })
+    .catch(console.error);

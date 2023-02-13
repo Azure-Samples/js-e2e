@@ -4,11 +4,14 @@
   "description": "JavaScript to Azure Cache for Redis",
   "main": "index.js",
   "scripts": {
+    "start:ui": "redis-commander --redis-password --redis-port 6379 --redis-host gh-redis-cache.redis.cache.windows.net --redis-tls"
   },
   "author": "",
   "license": "MIT",
   "dependencies": {
     "csv-parser": "^3.0.0",
-    "ioredis": "^4.22.0"
+    "dotenv": "^16.0.3",
+    "ioredis": "^4.22.0",
+    "redis": "^4.6.4"
   }
 }
