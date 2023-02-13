@@ -4,7 +4,7 @@
   "description": "JavaScript to Azure Cache for Redis",
   "main": "index.js",
   "scripts": {
-    "start:ui": "redis-commander --redis-password BNpuE4IEkHeV8VCdoSrwDWazkjdKH3JidAzCaEzopmM= --redis-port 6379 --redis-host gh-redis-cache.redis.cache.windows.net --redis-tls"
+    "start:ui": "redis-commander --redis-password --redis-port 6379 --redis-host gh-redis-cache.redis.cache.windows.net --redis-tls"
   },
   "author": "",
   "license": "MIT",
