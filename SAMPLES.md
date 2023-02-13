@@ -14,9 +14,9 @@ These are client, server, or full-stack applications using Azure services - foun
 |[Server - Text to Speech conversion to MP3 files using Cognitive Services Speech](https://github.com/Azure-Samples/js-e2e-express-server-cognitive-services)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/convert-text-to-speech-cognitive-services)|
 |[Server with MongoDB](https://github.com/Azure-Samples/js-e2e-express-mongodb)|[docs](https://docs.microsoft.com/azure/developer/javascript/tutorial/deploy-nodejs-mongodb-app-service-from-visual-studio-code)|
 |[Full stack with MongoDB](https://github.com/Azure-Samples/js-e2e-express-react-mongodb)||
-|[GraphQL serverless function](https://github.com/azure-samples/js-e2e-azure-function-graphql-hello) - Hello world with TypeScript, ready to deploy to Azure Function.|(docs)[https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-web-app/graphql/get-started]|
-|[GraphQL serverless CRUD function](https://github.com/azure-samples/js-e2e-azure-function-graphql-crud-operations)|(docs)[https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-web-app/graphql/get-started#reading-and-writing-apollo-graphql-with-queries-and-mutations]|
-|[GraphQL static web app with Function API](https://github.com/azure-samples/js-e2e-graphql-cosmosdb-static-web-app)|(docs)[https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-web-app/graphql/static-web-app-graphql/introduction?branch=master]|
+|[GraphQL serverless function](https://github.com/azure-samples/js-e2e-azure-function-graphql-hello) - Hello world with TypeScript, ready to deploy to Azure Function.|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-web-app/graphql/get-started)|
+|[GraphQL serverless CRUD function](https://github.com/azure-samples/js-e2e-azure-function-graphql-crud-operations)|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-web-app/graphql/get-started#reading-and-writing-apollo-graphql-with-queries-and-mutations)|
+|[GraphQL static web app with Function API](https://github.com/azure-samples/js-e2e-graphql-cosmosdb-static-web-app)|[docs](https://docs.microsoft.com/en-us/azure/developer/javascript/how-to/with-web-app/graphql/static-web-app-graphql/introduction?branch=master)|
 
 ## Other Samples
 
