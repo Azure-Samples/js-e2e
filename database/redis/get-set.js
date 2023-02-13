@@ -1,11 +1,5 @@
 const redis = require('ioredis');
-
-const config = {
-    "HOST": "YOUR-RESOURCE-NAME.redis.cache.windows.net",
-    "KEY": "YOUR-RESOURCE-PASSWORD",
-    "TIMEOUT": 300,
-    "KEY_PREFIX": "demoExample:"
-}
+const { config } = require('./config')
 
 // Create Redis config object
 const configuration = {
