@@ -206,7 +206,7 @@ async function getNICInfo() {
   );
 }
 
-async function createVirtualMachine() {
+async function createVirtualMachine(nicId, vmImageVersionNumber) {
   const vmParameters = {
     location: location,
     osProfile: {
