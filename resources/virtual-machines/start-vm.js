@@ -32,7 +32,7 @@ async function startVM() {
     credentials,
     subscriptionId
   );
-  const result = await computeClient.virtualMachines.start(
+  const result = await computeClient.virtualMachines.beginStart(
     resourceGroupName,
     vmResourceName
   );
